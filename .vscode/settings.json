@@ -1,3 +1,4 @@
 {
-    "eslint.nodePath": "c:\\Users\\KorotkieRyki\\.vscode\\extensions\\salesforce.salesforcedx-vscode-lwc-47.10.0\\node_modules"
+    "eslint.nodePath": "c:\\Users\\KorotkieRyki\\.vscode\\extensions\\salesforce.salesforcedx-vscode-lwc-47.15.0\\node_modules",
+    "salesforcedx-vscode-apex.java.home": "C:\\\\Program Files\\\\AdoptOpenJDK\\\\jdk-11.0.6.10-hotspot"
 }

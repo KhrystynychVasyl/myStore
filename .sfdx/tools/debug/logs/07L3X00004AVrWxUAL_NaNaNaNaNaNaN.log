@@ -1,0 +1,75 @@
+47.0 APEX_CODE,FINEST;APEX_PROFILING,INFO;CALLOUT,INFO;DB,INFO;NBA,INFO;SYSTEM,DEBUG;VALIDATION,INFO;VISUALFORCE,FINER;WAVE,INFO;WORKFLOW,INFO
+13:13:46.2 (2621555)|USER_INFO|[EXTERNAL]|0053X00000AtM0M|khrystynych.vasyl@ctdevlviv.stud|(GMT+00:00) Irish Standard Time (Europe/Dublin)|GMTZ
+13:13:46.2 (2679211)|EXECUTION_STARTED
+13:13:46.2 (2686238)|CODE_UNIT_STARTED|[EXTERNAL]|TRIGGERS
+13:13:46.2 (2728099)|CODE_UNIT_STARTED|[EXTERNAL]|01q3X0000018SSq|TestTestTest on myorder trigger event BeforeInsert|__sfdc_trigger/TestTestTest
+13:13:46.2 (2800949)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+13:13:46.2 (3275798)|HEAP_ALLOCATE|[79]|Bytes:3
+13:13:46.2 (3397540)|HEAP_ALLOCATE|[84]|Bytes:152
+13:13:46.2 (3431124)|HEAP_ALLOCATE|[399]|Bytes:408
+13:13:46.2 (3453899)|HEAP_ALLOCATE|[412]|Bytes:408
+13:13:46.2 (3466548)|HEAP_ALLOCATE|[520]|Bytes:48
+13:13:46.2 (3497756)|HEAP_ALLOCATE|[139]|Bytes:6
+13:13:46.2 (3522976)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+13:13:46.2 (3555892)|VARIABLE_SCOPE_BEGIN|[1]|this|TestTestTest|true|false
+13:13:46.2 (3718786)|VARIABLE_ASSIGNMENT|[1]|this|{}|0x542995da
+13:13:46.2 (3803658)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+13:13:46.2 (3825484)|VARIABLE_SCOPE_BEGIN|[1]|this|TestTestTest|true|false
+13:13:46.2 (3859920)|VARIABLE_ASSIGNMENT|[1]|this|{}|0x542995da
+13:13:46.2 (3904548)|STATEMENT_EXECUTE|[1]
+13:13:46.3 (3910141)|CUMULATIVE_LIMIT_USAGE
+13:13:46.3 (3910141)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 0 out of 100
+  Number of query rows: 0 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+13:13:46.3 (3910141)|CUMULATIVE_LIMIT_USAGE_END
+
+13:13:46.2 (5446797)|CODE_UNIT_FINISHED|TestTestTest on myorder trigger event BeforeInsert|__sfdc_trigger/TestTestTest
+13:13:46.2 (51631934)|CODE_UNIT_STARTED|[EXTERNAL]|01q3X0000018SSv|myOrder on myorder trigger event AfterInsert|__sfdc_trigger/myOrder
+13:13:46.2 (51687754)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:8
+13:13:46.2 (51888151)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:1
+13:13:46.2 (51912682)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+13:13:46.2 (51925109)|VARIABLE_SCOPE_BEGIN|[1]|this|myOrder|true|false
+13:13:46.2 (51975807)|VARIABLE_ASSIGNMENT|[1]|this|{}|0xa4a8265
+13:13:46.2 (52016795)|HEAP_ALLOCATE|[EXTERNAL]|Bytes:4
+13:13:46.2 (52049499)|VARIABLE_SCOPE_BEGIN|[1]|this|myOrder|true|false
+13:13:46.2 (52066241)|VARIABLE_ASSIGNMENT|[1]|this|{}|0xa4a8265
+13:13:46.2 (52076532)|STATEMENT_EXECUTE|[1]
+13:13:46.2 (52114030)|HEAP_ALLOCATE|[52]|Bytes:5
+13:13:46.2 (52151974)|HEAP_ALLOCATE|[58]|Bytes:5
+13:13:46.2 (52161879)|HEAP_ALLOCATE|[66]|Bytes:7
+13:13:46.2 (52193858)|STATEMENT_EXECUTE|[2]
+13:13:46.2 (52200712)|STATEMENT_EXECUTE|[3]
+13:13:46.2 (52203157)|STATEMENT_EXECUTE|[4]
+13:13:46.2 (52207223)|HEAP_ALLOCATE|[4]|Bytes:36
+13:13:46.2 (52315219)|USER_DEBUG|[4]|DEBUG|trigger has executed on after insert
+13:13:46.52 (52331426)|CUMULATIVE_LIMIT_USAGE
+13:13:46.52 (52331426)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 0 out of 100
+  Number of query rows: 0 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+13:13:46.52 (52331426)|CUMULATIVE_LIMIT_USAGE_END
+
+13:13:46.2 (53374970)|CODE_UNIT_FINISHED|myOrder on myorder trigger event AfterInsert|__sfdc_trigger/myOrder
+13:13:46.2 (71916995)|CODE_UNIT_FINISHED|TRIGGERS
+13:13:46.2 (71940969)|EXECUTION_FINISHED
