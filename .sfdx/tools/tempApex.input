@@ -1,0 +1,1 @@
+insert new myorder__c(Name ='someTest');

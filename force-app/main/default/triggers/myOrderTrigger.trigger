@@ -1,7 +1,3 @@
-trigger myOrderTrigger on myorder__c (before insert) {
-if (Trigger.isAfter) {
-    if (Trigger.isInsert) {
-        System.debug('trigger has executed on after insert');
-    }
-}
+trigger myOrderTrigger on myorder__c (after insert) {
+HandlerExecutionPool.getInstance().getHandler(myorder__c.class).execute();    
 }

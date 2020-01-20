@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>Class_Name__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Class Name</label>
+        <length>50</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Execution_Order__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Defines the order of workers execution. Default is 0, which is undefined order.</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Execution Order</label>
+        <precision>3</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_Active__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Determines if the trigger worker will be executed.</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Is Active</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Object_Name__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Object Name</label>
+        <referenceTo>EntityDefinition</referenceTo>
+        <relationshipLabel>Trigger_Dependency</relationshipLabel>
+        <relationshipName>Trigger_Dependency</relationshipName>
+        <required>false</required>
+        <type>MetadataRelationship</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Other_Object_API_Name__c</fullName>
+        <description>For objects, which are currently not supported in entity definition</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>For objects, which are currently not supported in entity definition</inlineHelpText>
+        <label>Other Object API Name</label>
+        <length>60</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Worker_Description__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Briefly describe the functionality of the worker class</inlineHelpText>
+        <label>Worker Description</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <label>Trigger Dependency</label>
+    <listViews>
+        <fullName>More_Info</fullName>
+        <columns>MasterLabel</columns>
+        <columns>DeveloperName</columns>
+        <columns>Object_Name__c</columns>
+        <columns>Other_Object_API_Name__c</columns>
+        <columns>Class_Name__c</columns>
+        <columns>Is_Active__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>MoreInfo</label>
+        <language>en_US</language>
+    </listViews>
+    <pluralLabel>Trigger Dependency</pluralLabel>
+    <validationRules>
+        <fullName>Either_Object_name_or_Other_Object_Name</fullName>
+        <active>true</active>
+        <description>Only one of the object names must be populated</description>
+        <errorConditionFormula>AND(ISBLANK(Object_Name__c), ISBLANK(Other_Object_API_Name__c))
+            || AND(!ISBLANK(Object_Name__c) &amp;&amp; !ISBLANK(Other_Object_API_Name__c))</errorConditionFormula>
+        <errorMessage>One of the Object names must be populated</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>
