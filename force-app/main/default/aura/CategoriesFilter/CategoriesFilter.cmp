@@ -1,3 +1,4 @@
 <aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
     <c:myHeader/>
+    <c:Header/>
 </aura:component>

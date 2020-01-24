@@ -14,8 +14,8 @@ public with sharing class GetProductsFromURL {
     private class TempProduct{
         Integer price;
         String name;
-        public myProducy__c someMethod() {
-            return new myProducy__c(Name = this.name, price__c = this.price);
+        public myProduct__c someMethod() {
+            return new myProduct__c(Name = this.name, price__c = this.price);
         }
     }
 
@@ -35,7 +35,7 @@ public with sharing class GetProductsFromURL {
         if (response.getStatusCode() == 200) {
             //String s = (String) JSON.deserializeUntyped(response.getBody());
             String s = (String) JSON.deserializeUntyped(response.getBody());
-           // List<myProducy__c> productList = (List<myProducy__c>) JSON.deserialize(s ,List<myProducy__c>.class);
+           // List<myProduct__c> productList = (List<myProduct__c>) JSON.deserialize(s ,List<myProduct__c>.class);
             tempProductList = (List<TempProduct>) JSON.deserialize(s ,List<TempProduct>.class);
             
         }
@@ -43,11 +43,11 @@ public with sharing class GetProductsFromURL {
     }
 
     public void downloadProducts() {
-        List<myProducy__c> productList = new List<myProducy__c>();
+        List<myProduct__c> productList = new List<myProduct__c>();
         for (TempProduct tempProd: this.getTempProductList()) {
             productList.add(tempProd.someMethod()) ;
         }
-        //delete [SELECT id FROM myProducy__c];
+        //delete [SELECT id FROM myProduct__c];
         insert productList;
     }
 }

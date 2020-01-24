@@ -1,0 +1,18 @@
+<aura:component>
+  <aura:registerEvent name="addItemToCartEvent" type="c:addItemToCartEvent" />
+  <aura:attribute name="productItem" type="myProduct__c" />
+
+  <div class="cart">
+    <p>{!v.productItem.Id}</p>
+    <p>{!v.productItem.Name}</p>
+    <p>{!v.productItem.category__r.Name}</p>
+    <p>{!v.productItem.price__c}</p>
+    <p>{!v.productItem.stock__c}</p>
+  </div>
+  <lightning:button
+    variant="success"
+    label="Add to Cart"
+    title="Success"
+    onclick="{! c.handleClick }"
+  />
+</aura:component>

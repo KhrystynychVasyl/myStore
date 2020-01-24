@@ -8,7 +8,7 @@
     action="{!c.handleApplicationEvent}"
   />
 
-  <c:myHeader />
+  <c:myHeader/>
 
   <div>
     <lightning:button
