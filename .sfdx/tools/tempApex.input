@@ -1,1 +1,2 @@
-insert new myorder__c(Name ='someTest');
+MyOrderEmailService d = new MyOrderEmailService();
+d.demo();

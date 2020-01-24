@@ -1,0 +1,13 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+	    <lightning:layout class="slds-page-header slds-page-header--object-home">
+        <lightning:layoutItem>
+            <lightning:icon iconName="action:goal" alternativeText="My Camping"/>
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="horizontal-small">
+            <div class="page-section page-header">
+                <h1 class="slds-text-heading--label">MyCategiries</h1>
+                <h2 class="slds-text-heading--medium">Yesssss</h2>
+            </div>
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>
