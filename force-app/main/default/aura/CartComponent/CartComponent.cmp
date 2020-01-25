@@ -18,35 +18,53 @@
     'Name': ''}"
   />
   <aura:attribute name="truthy" type="Boolean" default="true" />
-
+  <aura:attribute name="totalPrice" type="Integer" default="0" />
   <aura:handler
     event="c:addItemToCartEvent"
     action="{!c.handleApplicationEvent}"
   />
+  <aura:handler
+  event="c:cartListChange"
+  action="{!c.handleCartListChange}"
+/>
+
+
+
 
   <!-- <aura:handler name="init" action="{!c.doInit}" value="{!this}" /> -->
 
   <c:myHeader header="Cart Window" />
   <div class="cart-block">
     <aura:if isTrue="{!v.truthy}">
-      <div>
-        <lightning:button
-          label="Create Order"
-          class="slds-m-top--medium"
-          variant="brand"
-          onclick="{!c.createCustomer}"
-        />
-        <lightning:button
-          variant="destructive"
-          label="Info"
-          title="Destructive action"
-          onclick="{! c.handleClick }"
-        />
+      <div class="inner-div">
+        <div class="flex-center">
+          <lightning:button
+            label="Create Order"
+            variant="success"
+            onclick="{!c.handleClick}"
+          />
+          <lightning:button
+            label="Info"
+            title="Destructive action"
+            onclick="{! c.handleClick }"
+          />
+        </div>
       </div>
-      True
+      <aura:if isTrue="{!v.cartList[0]}">
+        <div class="inner-div flex-center">
+          <h3>Total Sum In Cart: {!v.totalPrice}</h3>
+        </div>
+      </aura:if>
+      <aura:iteration items="{!v.cartList}" var="cartItem">
+        <c:cartListItem
+          cartItemIn="{!cartItem.product.product}"
+          quantity="{!cartItem.product.quantity}"
+          cartList="{!v.cartList}"
+        />
+      </aura:iteration>
       <aura:set attribute="else">
         <div aria-labelledby="newCustomer">
-          <h3>Enter Your Information</h3>
+          <h3 style="text-align: center;">Enter Your Information</h3>
           <fieldset class="slds-box slds-theme--default slds-container--small">
             <legend
               id="newCustomer"
@@ -77,27 +95,40 @@
                 value="{!v.newOrder.Name}"
                 required="true"
               />
-
-              <lightning:button
-                label="Create"
-                class="slds-m-top--medium"
-                variant="brand"
-                onclick="{!c.createCustomer}"
-              />
             </form>
           </fieldset>
         </div>
-        False
+        <div class="inner-div">
+          <div class="inner-div flex-center">
+            <lightning:button
+              variant="destructive"
+              label="Back to Order"
+              title="Destructive action"
+              onclick="{! c.handleClick }"
+            />
+            <lightning:button
+              label="Info"
+              title="Destructive action"
+              onclick="{! c.handleClick }"
+            />
+            <lightning:button
+              label="Confirm Order"
+              variant="success"
+              onclick="{!c.createCustomer}"
+            />
+          </div>
+          <ul>
+            <aura:iteration items="{!v.cartList}" var="cartItem">
+              <li>
+                <p class="info">
+                  - Name: {!cartItem.product.product.Name}; Quantity:
+                  <strong>{!cartItem.product.quantity}</strong>
+                </p>
+              </li>
+            </aura:iteration>
+          </ul>
+        </div>
       </aura:set>
     </aura:if>
-  </div>
-  <div class="cart-block">
-    <aura:iteration items="{!v.cartList}" var="cartItem">
-      <c:cartListItem
-        cartItemIn="{!cartItem.product.product}"
-        quantity="{!cartItem.product.quantity}"
-        cartList="{!v.cartList}"
-      />
-    </aura:iteration>
   </div>
 </aura:component>

@@ -1,10 +1,13 @@
 <aura:component>
   <aura:attribute name="productList" type="myProduct__c[]" />
-  <aura:iteration items="{!v.productList}" var="prod">
-    <lightning:layout>
-      <lightning:layoutItem padding="around-small" size="6">
-        <c:ProductListItem productItem="{!prod}" />
-      </lightning:layoutItem>
-    </lightning:layout>
-  </aura:iteration>
+  <div class="list-container">
+    <aura:iteration items="{!v.productList}" var="prod">
+      <div class="list-item">
+        <div class="border-class">
+          <c:ProductListItem productItem="{!prod}" />
+        </div>
+          
+      </div>
+    </aura:iteration>
+  </div>
 </aura:component>

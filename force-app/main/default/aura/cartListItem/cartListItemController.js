@@ -7,6 +7,8 @@
         {
           var quantity = component.get("v.quantity");
           component.set("v.quantity", quantity + 1);
+          var appEvent = $A.get("e.c:cartListChange");
+          appEvent.fire();
         }
 
         break;
@@ -24,6 +26,9 @@
             appEvent.setParams({ cartItemIn: cartItemIn });
             appEvent.fire();
           }
+
+          var appEvent = $A.get("e.c:cartListChange");
+          appEvent.fire();
         }
         break;
       case "Delete Position":
@@ -32,10 +37,14 @@
           var cartItemIn = component.get("v.cartItemIn");
           cartList = cartList.filter(el => el.Id !== cartItemIn.Id);
           component.set("v.cartList", cartList);
+
+          var appEvent = $A.get("e.c:cartListChange");
+          appEvent.fire();
         }
         break;
     }
   },
+
   myAction: function(component, event, helper) {}
   //   handleInit: function(component) {
   //     component.set("v.cartItem", {});

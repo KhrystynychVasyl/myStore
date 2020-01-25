@@ -1,6 +1,27 @@
 .THIS.cart-block {
-    margin: 5px;
-    padding: 5px;
-    border: black 1px solid;
-    border-radius: 5px;
+  margin: 5px;
+  padding: 5px;
+  border: black 1px solid;
+  border-radius: 5px;
+}
+.THIS .inner-div {
+  margin: 5px;
+  padding: 5px;
+  border: black 1px solid;
+  border-radius: 5px;
+}
+.THIS ul {
+  margin: 3px;
+  padding: 3px;
+}
+
+.THIS ul li {
+  font-size: 16px;
+  margin: 3px;
+  padding: 3px;
+}
+
+.THIS .flex-center {
+  display: flex;
+  justify-content: center;
 }

@@ -1,6 +1,10 @@
 .THIS.cart-item {
-    margin: 5px;
-    padding: 5px;
-    border: black 1px solid;
-    border-radius: 5px;
+  margin: 5px;
+  padding: 5px;
+  border: black 1px solid;
+  border-radius: 5px;
+}
+.THIS .info {
+  text-align: center;
+  font-size: 16px;
 }
