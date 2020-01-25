@@ -33,8 +33,20 @@
     });
     component.set("v.categoriesTree", categoriesTree);
     helper.helperFindInnerCategories(component, event, helper, Id);
-    helper.helperFindProductsById(component, event, helper, Id);
-},
+    var selectedCategoryIdList = [];
+    selectedCategoryIdList = helper.helperFindProductsById(
+      component,
+      event,
+      helper,
+      Id
+    );
+
+    var appEvent = $A.get("e.c:selectedCategoryUpdatedEvent");
+    appEvent.setParams({
+      selectedCategoryIdList: selectedCategoryIdList
+    });
+    appEvent.fire();
+  },
   upTheTree: function(component, event, helper) {
     var Id;
     var Name = event.getSource().get("v.label");
@@ -48,6 +60,18 @@
     categoriesTree = categoriesTree.slice(0, index + 1);
     component.set("v.categoriesTree", categoriesTree);
     helper.helperFindInnerCategories(component, event, helper, Id);
-    helper.helperFindProductsById(component, event, helper, Id);
+    var selectedCategoryIdList = [];
+    selectedCategoryIdList = helper.helperFindProductsById(
+      component,
+      event,
+      helper,
+      Id
+    );
+
+    var appEvent = $A.get("e.c:selectedCategoryUpdatedEvent");
+    appEvent.setParams({
+      selectedCategoryIdList: selectedCategoryIdList
+    });
+    appEvent.fire();
   }
 });

@@ -3,7 +3,7 @@
   implements="forceCommunity:availableForAllPageTypes"
   access="global"
 >
-
+<aura:registerEvent name="selectedCategoryUpdatedEvent" type="c:selectedCategoryUpdatedEvent" />
   <aura:attribute name="categories" type="myCategory__c[]" />
   <aura:attribute name="tempCategories" type="myCategory__c[]" />
   <aura:attribute name="categoriesTree" type="Object[]" />

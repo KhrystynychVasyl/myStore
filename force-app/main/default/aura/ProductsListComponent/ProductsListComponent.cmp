@@ -3,6 +3,10 @@
   implements="forceCommunity:availableForAllPageTypes"
   access="global"
 >
+<aura:handler
+event="c:selectedCategoryUpdatedEvent"
+action="{!c.handleApplicationEvent}"
+/>
   <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
   <aura:attribute name="products" type="myProduct__c[]" />
   <c:myHeader header="Products List" />

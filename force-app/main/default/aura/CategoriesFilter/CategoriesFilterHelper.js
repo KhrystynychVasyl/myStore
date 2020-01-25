@@ -16,18 +16,17 @@
     } else {
       tempCategories = categories.filter(el => el.myCategory__c === Id);
     }
-    console.log(JSON.stringify(categories));
     component.set("v.tempCategories", tempCategories);
   },
   helperFindProductsById: function(component, event, helper, Id) {
     let arr = component.get("v.categories");
-    let result = [],
+    let selectedCategoryIdList = [],
       stepArray = [],
       tempArray = [];
     if (Id === "") {
-      result = arr.map(el => el.Id);
+      selectedCategoryIdList = arr.map(el => el.Id);
     } else {
-      result.push(Id);
+      selectedCategoryIdList.push(Id);
       tempArray = arr
         .filter(element => element.myCategory__c === Id)
         .map(element => element.Id);
@@ -40,10 +39,11 @@
             .map(element => element.Id);
           tempArray.push(...someArr);
         });
-        result.push(...stepArray);
+        selectedCategoryIdList.push(...stepArray);
       }
     }
-    console.log(JSON.stringify(result));
-    //return result;
+
+    return selectedCategoryIdList;
+
   }
 });
