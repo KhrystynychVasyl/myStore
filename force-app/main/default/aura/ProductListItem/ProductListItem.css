@@ -1,3 +1,21 @@
-.THIS {
+.THIS.cart-item-box {
+  height: 250px;
+  margin: 3px 0px;
+  padding: 3px 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.THIS .cart {
+  margin: 0px 3px;
+  padding: 0px 3px;
+}
+.THIS .flex-center {
+  display: flex;
+  justify-content: center;
+}
 
+.THIS .actionButton div {
+  margin: 3px 0px;
+  padding: 3px 0px;
 }

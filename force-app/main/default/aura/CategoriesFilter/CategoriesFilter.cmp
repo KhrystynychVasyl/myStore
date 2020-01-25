@@ -1,4 +1,51 @@
-<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
-    <c:myHeader header="Categories Filter"/>
-    <c:Header/>
+<aura:component
+  controller="CategoriesFilterController"
+  implements="forceCommunity:availableForAllPageTypes"
+  access="global"
+>
+
+  <aura:attribute name="categories" type="myCategory__c[]" />
+  <aura:attribute name="tempCategories" type="myCategory__c[]" />
+  <aura:attribute name="categoriesTree" type="Object[]" />
+  <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+  <c:myHeader header="Categories Filter" />
+  <!-- <div>
+    <aura:iteration items="{!v.categories}" var="category">
+      <lightning:button
+        aura:id="{!category.Id}"
+        variant="base"
+        label="{!category.Name}"
+        title="Base action"
+        onclick="{! c.handleClick }"
+      />
+      <pre
+          >ID :{!category.Id} 
+          Name :{!category.Name} 
+          ParentId :{!category.myCategory__r.Id} 
+          ParentName :{!category.myCategory__r.Name}</pre
+        >
+    </aura:iteration>
+  </!-->
+  <div>
+    <aura:iteration items="{!v.categoriesTree}" var="category">
+      <lightning:button
+        aura:id="{!category.Id}"
+        variant="base"
+        label="{!category.Name}"
+        title="Base action"
+        onclick="{! c.upTheTree }"
+      />
+    </aura:iteration>
+  </div>
+  <div>
+    <aura:iteration items="{!v.tempCategories}" var="category">
+      <lightning:button
+        aura:id="{!category.Id}"
+        variant="base"
+        label="{!category.Name}"
+        title="Base action"
+        onclick="{! c.downTheTree }"
+      />
+    </aura:iteration>
+  </div>
 </aura:component>

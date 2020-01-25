@@ -12,8 +12,6 @@
     if (quantity) {
       obj.quantity = +quantity;
     }
-    console.log(obj);
-    // event.getSource().set("v.disabled", true);
     appEvent.setParams({ obj: obj });
     appEvent.fire();
   }

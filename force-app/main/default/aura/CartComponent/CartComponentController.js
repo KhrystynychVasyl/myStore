@@ -9,6 +9,11 @@
           component.set("v.truthy", truthy);
         }
         break;
+      case "Clear Order":
+        {
+          component.set("v.cartList", []);
+        }
+        break;
       case "Back to Order":
         {
           var truthy = component.get("v.truthy");
@@ -52,7 +57,6 @@
     }
   },
   handleCartListChange: function(component, event, helper) {
-    console.log("list");
     var cartList = component.get("v.cartList");
     var totalPrice = component.get("v.totalPrice");
     totalPrice = cartList.reduce(

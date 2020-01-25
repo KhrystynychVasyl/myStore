@@ -22,9 +22,6 @@
             var cartItemIn = component.get("v.cartItemIn");
             cartList = cartList.filter(el => el.Id !== cartItemIn.Id);
             component.set("v.cartList", cartList);
-            var appEvent = $A.get("e.c:addItemToCartEvent");
-            appEvent.setParams({ cartItemIn: cartItemIn });
-            appEvent.fire();
           }
 
           var appEvent = $A.get("e.c:cartListChange");

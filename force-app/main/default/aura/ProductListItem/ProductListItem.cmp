@@ -2,28 +2,36 @@
   <aura:registerEvent name="addItemToCartEvent" type="c:addItemToCartEvent" />
   <aura:attribute name="productItem" type="myProduct__c" />
   <aura:attribute name="quantity" type="Integer" />
-  <div class="cart">
-    <p>{!v.productItem.Name}</p>
-    <br></br>
-    <p>{!v.productItem.category__r.Name}</p>
-    <br></br>
-    <p>{!v.productItem.price__c}</p>
-    <br></br>
-    <p>{!v.productItem.Description__c}</p>
+  <div class="cart-item-box">
+    <!-- <div class="product-card-image">
+      <img src="{!v.productItem.imgUrl__c}" />
+    </div> -->
+    <div class="cart">
+      <p>{!v.productItem.Name}</p>
+      <br></br>
+      <p>{!v.productItem.category__r.Name}</p>
+      <br></br>
+      <p>{!v.productItem.price__c}</p>
+      <br></br>
+      <!-- <p>{!v.productItem.Description__c}</p> -->
+    </div>
+    <div class="actionButton">
+      <lightning:input
+        aura:id="quantity"
+        name="quantity"
+        value="{!v.quantity}"
+        required="false"
+        placeholder="Quantity"
+      />
+      <div class="flex-center">
+        <lightning:button
+          aura:id="Add to Cart"
+          variant="success"
+          label="Add to Cart"
+          title="Success"
+          onclick="{! c.handleClick }"
+        />
+      </div>
+    </div>
   </div>
-
-  <lightning:input
-    aura:id="quantity"
-    label="Quantity"
-    name="quantity"
-    value="{!v.quantity}"
-    required="false"
-  />
-  <lightning:button
-    aura:id="Add to Cart"
-    variant="success"
-    label="Add to Cart"
-    title="Success"
-    onclick="{! c.handleClick }"
-  />
 </aura:component>
