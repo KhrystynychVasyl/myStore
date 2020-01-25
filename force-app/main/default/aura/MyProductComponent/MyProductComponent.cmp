@@ -1,6 +1,0 @@
-<aura:component controller="ProductController" implements="forceCommunity:availableForAllPageTypes" access="global" >
-    <aura:attribute name="products" type="myProduct__c[]"/>
-    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
-    <c:myHeader/>
-    <c:ProductsList productList="{!v.products}"/>
-</aura:component>

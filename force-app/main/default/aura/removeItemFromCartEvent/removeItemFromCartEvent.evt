@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION">
+    <aura:attribute name="productItem" type="myProduct__c"/>
+</aura:event>
+

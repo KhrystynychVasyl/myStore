@@ -1,2 +1,6 @@
-.THIS {
+.THIS.cart-block {
+    margin: 5px;
+    padding: 5px;
+    border: black 1px solid;
+    border-radius: 5px;
 }

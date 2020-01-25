@@ -1,36 +1,103 @@
 <aura:component
+  controller="CartController"
   implements="forceCommunity:availableForAllPageTypes"
   access="global"
 >
   <aura:attribute name="cartList" type="Object[]" />
+  <aura:attribute
+    name="newCustomer"
+    type="myCustomer__c"
+    default="{ 'sobjectType': 'myCustomer__c',
+    'Name': '',
+    'password__c': ''}"
+  />
+  <aura:attribute
+    name="newOrder"
+    type="myorder__c"
+    default="{ 'sobjectType': 'myorder__c',
+    'Name': ''}"
+  />
+  <aura:attribute name="truthy" type="Boolean" default="true" />
+
   <aura:handler
     event="c:addItemToCartEvent"
     action="{!c.handleApplicationEvent}"
   />
 
-  <c:myHeader/>
+  <!-- <aura:handler name="init" action="{!c.doInit}" value="{!this}" /> -->
 
-  <div>
-    <lightning:button
-      variant="destructive"
-      label="Clear"
-      title="Destructive action"
-      onclick="{! c.handleClick }"
-    />
+  <c:myHeader header="Cart Window" />
+  <div class="cart-block">
+    <aura:if isTrue="{!v.truthy}">
+      <div>
+        <lightning:button
+          label="Create Order"
+          class="slds-m-top--medium"
+          variant="brand"
+          onclick="{!c.createCustomer}"
+        />
+        <lightning:button
+          variant="destructive"
+          label="Info"
+          title="Destructive action"
+          onclick="{! c.handleClick }"
+        />
+      </div>
+      True
+      <aura:set attribute="else">
+        <div aria-labelledby="newCustomer">
+          <h3>Enter Your Information</h3>
+          <fieldset class="slds-box slds-theme--default slds-container--small">
+            <legend
+              id="newCustomer"
+              class="slds-text-heading--small 
+          slds-p-vertical--medium"
+            >
+              Customer Info
+            </legend>
+            <form class="slds-form--stacked">
+              <lightning:input
+                aura:id="newCustomerForm"
+                label="Customer Name"
+                name="newCustomerName"
+                value="{!v.newCustomer.Name}"
+                required="true"
+              />
+              <lightning:input
+                aura:id="newCustomerForm"
+                label="Customer Password"
+                name="newCustomerPassword"
+                value="{!v.newCustomer.password__c}"
+                required="true"
+              />
+              <lightning:input
+                aura:id="newCustomerForm"
+                label="Order Name"
+                name="newCustomerOrderName"
+                value="{!v.newOrder.Name}"
+                required="true"
+              />
 
-    <lightning:button
-      variant="success"
-      label="Order"
-      title="Success"
-      onclick="{! c.handleClick }"
-    />
+              <lightning:button
+                label="Create"
+                class="slds-m-top--medium"
+                variant="brand"
+                onclick="{!c.createCustomer}"
+              />
+            </form>
+          </fieldset>
+        </div>
+        False
+      </aura:set>
+    </aura:if>
   </div>
-  <aura:iteration items="{!v.cartList}" var="cartItem">
-    <div>
+  <div class="cart-block">
+    <aura:iteration items="{!v.cartList}" var="cartItem">
       <c:cartListItem
         cartItemIn="{!cartItem.product.product}"
         quantity="{!cartItem.product.quantity}"
+        cartList="{!v.cartList}"
       />
-    </div>
-  </aura:iteration>
+    </aura:iteration>
+  </div>
 </aura:component>

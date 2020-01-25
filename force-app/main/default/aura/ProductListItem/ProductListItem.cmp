@@ -10,6 +10,7 @@
     <p>{!v.productItem.stock__c}</p>
   </div>
   <lightning:button
+    aura:id="Add to Cart"
     variant="success"
     label="Add to Cart"
     title="Success"

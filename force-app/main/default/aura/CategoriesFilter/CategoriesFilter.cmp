@@ -1,4 +1,4 @@
 <aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
-    <c:myHeader/>
+    <c:myHeader header="Categories Filter"/>
     <c:Header/>
 </aura:component>
