@@ -1,2 +1,7 @@
-.THIS {
+.THIS .category-item {
+  flex-shrink: 1;
+  display: flex;
+}
+.THIS.category-block {
+  display: flex;
 }

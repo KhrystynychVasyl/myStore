@@ -62,7 +62,7 @@
     totalPrice = cartList.reduce(
       (acc, cur) => acc + cur.product.product.price__c * cur.product.quantity,
       0
-    );
+    ).toFixed(2);
     component.set("v.totalPrice", totalPrice);
   },
   createCustomer: function(component, event, helper) {

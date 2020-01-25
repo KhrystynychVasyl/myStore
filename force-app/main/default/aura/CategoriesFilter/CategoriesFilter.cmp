@@ -3,10 +3,15 @@
   implements="forceCommunity:availableForAllPageTypes"
   access="global"
 >
-<aura:registerEvent name="selectedCategoryUpdatedEvent" type="c:selectedCategoryUpdatedEvent" />
+  <aura:registerEvent
+    name="selectedCategoryUpdatedEvent"
+    type="c:selectedCategoryUpdatedEvent"
+  />
   <aura:attribute name="categories" type="myCategory__c[]" />
-  <aura:attribute name="tempCategories" type="myCategory__c[]" />
+  <aura:attribute name="tempCategories" type="Object[]" />
   <aura:attribute name="categoriesTree" type="Object[]" />
+  <aura:attribute name="productList" type="myProduct__c[]" />
+
   <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
   <c:myHeader header="Categories Filter" />
   <!-- <div>
@@ -26,26 +31,32 @@
         >
     </aura:iteration>
   </!-->
-  <div>
+  <div class="category-block">
     <aura:iteration items="{!v.categoriesTree}" var="category">
-      <lightning:button
-        aura:id="{!category.Id}"
-        variant="base"
-        label="{!category.Name}"
-        title="Base action"
-        onclick="{! c.upTheTree }"
-      />
+      <span class="category-item">
+        <lightning:button
+          aura:id="{!category.Id}"
+          variant="base"
+          label="{!category.Name}"
+          title="Base action"
+          onclick="{! c.upTheTree }"
+        />
+        <p>{!category.count}</p>
+      </span>
     </aura:iteration>
   </div>
-  <div>
+  <div class="category-block">
     <aura:iteration items="{!v.tempCategories}" var="category">
-      <lightning:button
-        aura:id="{!category.Id}"
-        variant="base"
-        label="{!category.Name}"
-        title="Base action"
-        onclick="{! c.downTheTree }"
-      />
+      <span class="category-item">
+        <lightning:button
+          aura:id="{!category.product.Id}"
+          variant="base"
+          label="{!category.product.Name}"
+          title="Base action"
+          onclick="{! c.downTheTree }"
+        />
+        <p>{!category.count}</p>
+      </span>
     </aura:iteration>
   </div>
 </aura:component>

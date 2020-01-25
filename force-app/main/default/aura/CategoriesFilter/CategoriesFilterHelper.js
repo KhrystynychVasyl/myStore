@@ -1,9 +1,10 @@
 ({
-  helperAddFirstCategory: function(component) {
+  helperAddFirstCategory: function(component, event, helper, count) {
     var categoriesTree = [
       {
         Id: "",
-        Name: "All Categories"
+        Name: "All Categories",
+        count: count
       }
     ];
     component.set("v.categoriesTree", categoriesTree);
@@ -16,9 +17,38 @@
     } else {
       tempCategories = categories.filter(el => el.myCategory__c === Id);
     }
-    component.set("v.tempCategories", tempCategories);
+
+    // console.log('list elem' + JSON.stringify(tempCategories));
+    let tempCategoriesId = tempCategories.map(el => el.Id);
+
+    // console.log('list id elem ' + JSON.stringify(tempCategoriesId));
+
+    let tempCategoriesInCategories = tempCategoriesId.map(el =>
+      this.helperFindCategoriesIdInCategory(component, event, helper, el)
+    );
+
+    // console.log(JSON.stringify(tempCategoriesInCategories));
+
+    let tempCategoriesProdCount = tempCategoriesInCategories.map(el =>
+      this.helperCountProdInCategory(component, event, helper, el)
+    );
+    // console.log(JSON.stringify(tempCategoriesProdCount));
+    // console.log(JSON.stringify(tempCategories));
+
+    let tempCategoriesObject = [];
+
+    tempCategories.forEach((element, index) =>
+      tempCategoriesObject.push({
+        product: element,
+        count: tempCategoriesProdCount[index]
+      })
+    );
+
+    //console.log(JSON.stringify(tempCategoriesObject));
+
+    component.set("v.tempCategories", tempCategoriesObject);
   },
-  helperFindProductsById: function(component, event, helper, Id) {
+  helperFindCategoriesIdInCategory: function(component, event, helper, Id) {
     let arr = component.get("v.categories");
     let selectedCategoryIdList = [],
       stepArray = [],
@@ -42,8 +72,18 @@
         selectedCategoryIdList.push(...stepArray);
       }
     }
-
     return selectedCategoryIdList;
-
+  },
+  helperCountProdInCategory: function(component, event, helper, Ids) {
+    let count = 0;
+    let productList = component.get("v.productList");
+    Ids.forEach(element => {
+      productList.forEach(el => {
+        if (element === el.category__r.Id) {
+          count += 1;
+        }
+      });
+    });
+    return count;
   }
 });

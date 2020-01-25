@@ -9,9 +9,35 @@
         var categories = response.getReturnValue();
         var Id = "test";
         component.set("v.categories", categories);
-        console.log(JSON.stringify(categories));
-        helper.helperAddFirstCategory(component);
-        helper.helperFindInnerCategories(component, event, helper, Id);
+
+        var innerAction = component.get("c.getProducts");
+
+        innerAction.setCallback(this, function(innerResponse) {
+          var productList = innerResponse.getReturnValue();
+          component.set("v.productList", productList);
+
+          let Id = "";
+
+          let Ids = helper.helperFindCategoriesIdInCategory(
+            component,
+            event,
+            helper,
+            Id
+          );
+
+          let count = helper.helperCountProdInCategory(
+            component,
+            event,
+            helper,
+            Ids
+          );
+
+          helper.helperAddFirstCategory(component, event, helper, count);
+
+          helper.helperFindInnerCategories(component, event, helper, Id);
+        });
+
+        $A.enqueueAction(innerAction);
       } else {
         console.log("Failed with state: " + state);
       }
@@ -20,21 +46,25 @@
     $A.enqueueAction(action);
   },
   downTheTree: function(component, event, helper) {
-    var Id;
+    var Id, count;
+
     var Name = event.getSource().get("v.label");
+
     let tempArray = component
       .get("v.tempCategories")
-      .filter(el => el.Name === Name);
-    Id = tempArray[0].Id;
+      .filter(el => el.product.Name === Name);
+    Id = tempArray[0].product.Id;
+    count = tempArray[0].count;
     var categoriesTree = component.get("v.categoriesTree");
     categoriesTree.push({
       Id: Id,
-      Name: Name
+      Name: Name,
+      count: count
     });
     component.set("v.categoriesTree", categoriesTree);
     helper.helperFindInnerCategories(component, event, helper, Id);
     var selectedCategoryIdList = [];
-    selectedCategoryIdList = helper.helperFindProductsById(
+    selectedCategoryIdList = helper.helperFindCategoriesIdInCategory(
       component,
       event,
       helper,
@@ -61,7 +91,7 @@
     component.set("v.categoriesTree", categoriesTree);
     helper.helperFindInnerCategories(component, event, helper, Id);
     var selectedCategoryIdList = [];
-    selectedCategoryIdList = helper.helperFindProductsById(
+    selectedCategoryIdList = helper.helperFindCategoriesIdInCategory(
       component,
       event,
       helper,
