@@ -7,13 +7,22 @@
   <aura:attribute
     name="anonymousCustomer"
     type="myCustomer__c"
-    default="{ 'sobjectType': 'myCustomer__c', 'Id': 'a003X0000132iynQAA','Contact_Name__c': '', 'Phone__c':'','email__c':''}"
+    default="{ 'sobjectType': 'myCustomer__c', 'Id': 'a003X0000132iynQAA',
+    'Contact_Name__c': 'qew', 'Phone__c':'111-111-1111','email__c':'lightning@force.com'}"
   />
   <aura:attribute
     name="newCustomer"
     type="myCustomer__c"
-    default="{ 'sobjectType': 'myCustomer__c','Contact_Name__c': '', 'Phone__c':'','email__c':'','Name': '',  'Password__c': ''}"
+    default="{ 'sobjectType': 'myCustomer__c','Contact_Name__c': 'qew', 
+    'Phone__c':'111-111-1111','email__c':'lightning@force.com','Name': '',  'Password__c': ''}"
   />
+  <aura:registerEvent
+    name="customerInfoUpdateEvent"
+    type="c:customerInfoUpdateEvent"
+  />
+  
+  <aura:registerEvent name="logInFromModalEvent" type="c:logInFromModalEvent" />
+  <aura:handler event="c:logInEvent" action="{!c.handleLogInEvent}" />
   <!--Use "slds-m-around_xx-large" class to add standard X-Large padding to the component-->
   <!-- <div class="slds-m-around_xx-large"></div> -->
   <div>
@@ -99,10 +108,11 @@
                   />
                   <div class="slds-box slds-box_xx-small flex-center">
                     <lightning:button
+                      aura:id="anonymousCustomer"
                       variant="success"
                       label="Buy Products"
                       title="Buy Products"
-                      onclick="{! c.handleClick }"
+                      onclick="{! c.handleClickOrder }"
                     />
                   </div>
 
@@ -112,7 +122,7 @@
                       name="Login"
                       required="true"
                       value="{!v.newCustomer.Name}"
-                      label="Contact Name"
+                      label="Login"
                       placeholder="John_Doe"
                     />
                     <lightning:input
@@ -153,10 +163,11 @@
                     />
                     <div class="slds-box slds-box_xx-small flex-center">
                       <lightning:button
+                        aura:id="newCustomer"
                         variant="success"
                         label="Buy Products"
                         title="Buy Products"
-                        onclick="{! c.handleClickNew }"
+                        onclick="{! c.handleClickOrder }"
                       />
                     </div>
                   </aura:set>

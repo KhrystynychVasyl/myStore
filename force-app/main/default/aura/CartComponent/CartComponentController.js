@@ -36,9 +36,6 @@
         {
           console.log(JSON.stringify(component.get("v.newOrder")));
           console.log(JSON.stringify(component.get("v.newCustomer")));
-          var isOpen = component.get("v.isOpen");
-          isOpen = true;
-          component.set("v.isOpen", isOpen);
         }
         break;
     }
@@ -67,79 +64,65 @@
     }
   },
   handleLogInEvent: function(component, event, helper) {
-    let newCustomer = component.get("v.newCustomer");
     let Id = event.getParam("Id");
-    if (Id === "") {
-      helper.helperOrderWindowInformationToggleHide(
-        component,
-        event,
-        helper,
-        true
-      );
-    }
-    newCustomer.Id = Id;
+    let type = event.getParam("type");
+    let newCustomer = component.get("v.newCustomer");
+    console.log("test9");
+    console.log(JSON.stringify(type));
 
-    component.set("v.newCustomer", newCustomer);
+    console.log(JSON.stringify(Id));
+    if (type === "From Modal") {
+      newCustomer.Id = Id;
+      component.set("v.newCustomer", newCustomer);
+      console.log("almost");
+      helper.helperSubmitOrder(component, event, helper);
+    } else {
+      
+
+      if (Id === "") {
+        helper.helperOrderWindowInformationToggleHide(
+          component,
+          event,
+          helper,
+          true
+        );
+      }
+      newCustomer.Id = Id;
+      component.set("v.newCustomer", newCustomer);
+    }
   },
   handleCartListChange: function(component, event, helper) {
     helper.helperTotalPriceCount(component, event, helper);
   },
-  createOrder: function(component, event, helper) {
-    if (component.get("v.newCustomer").Id) {
-      var validOrder = component
-        .find("newOrderForm")
-        .reduce(function(validSoFar, inputCmp) {
-          inputCmp.showHelpMessageIfInvalid();
-          return validSoFar && inputCmp.get("v.validity").valid;
-        }, true);
+  SubmitOrder: function(component, event, helper) {
+    // if (component.get("v.newCustomer").Id) {
+    var validOrder = component
+      .find("newOrderForm")
+      .reduce(function(validSoFar, inputCmp) {
+        inputCmp.showHelpMessageIfInvalid();
+        return validSoFar && inputCmp.get("v.validity").valid;
+      }, true);
 
-      if (validOrder) {
-        var newCustomer = component.get("v.newCustomer");
-        var newOrder = component.get("v.newOrder");
-        var act = component.get("c.getNewOrder");
-
-        let obj = {
-          Id: newCustomer.Id,
-          OrderName: newOrder.Name,
-          AddInformation: newOrder.Additional_Information__c
-        };
-        act.setParams({ obj: obj });
-        act.setCallback(this, function(response) {
-          var state = response.getState();
-          if (state === "SUCCESS") {
-            var newOrder = response.getReturnValue();
-            component.set("v.newOrder", newOrder);
-
-            let OrderProduct = component.get("v.OrderProduct");
-            let cartList = component.get("v.cartList");
-
-            cartList.forEach((element, index) =>
-              OrderProduct.push({
-                Name: newCustomer.Id + " " + Date.now() + " " + index,
-                Quantity__c: element.product.quantity,
-                order__c: newOrder.Id,
-                product__c: element.product.product.Id
-              })
-            );
-
-            var action = component.get("c.getOrderProductList");
-            action.setParams({ OrderProduct: OrderProduct });
-            action.setCallback(this, function(response) {
-              var state = response.getState();
-              if (state === "SUCCESS") {
-                var getOrderProductList = response.getReturnValue();
-                helper.helperOrderSubmitted(component, event, helper);
-              } else {
-                alert("Error");
-              }
-            });
-            $A.enqueueAction(action);
-          }
-        });
-        $A.enqueueAction(act);
-      }
+    if (validOrder) {
+      helper.helperShowModal(component, event, helper);
+    }
+    // } else {
+    //   alert("you need to LogIn");
+    // }
+  },
+  handleCustomerInfoUpdateEvent: function(component, event, helper) {
+    var infoUser = event.getParam("infoUser");
+    let newCustomer = component.get("v.newCustomer");
+    newCustomer.Id = infoUser.Id;
+    newCustomer.Contact_Name__c = infoUser.Contact_Name__c;
+    newCustomer.Phone__c = infoUser.Phone__c;
+    newCustomer.email__c = infoUser.email__c;
+    component.set("v.newCustomer", newCustomer);
+    if (infoUser.Id) {
+      console.log("anonym");
+      helper.helperSubmitOrder(component, event, helper);
     } else {
-      alert("you need to LogIn");
+      console.log("need log in action");
     }
   }
 });

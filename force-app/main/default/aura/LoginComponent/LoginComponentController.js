@@ -1,4 +1,7 @@
 ({
+  handleLogInFromModalEvent: function(component, event, helper) {
+    var infoUser = event.getParam("infoUser");
+  },
   handleLoginClick: function(component, event, helper) {
     var validCustomer = component
       .find("newCustomerForm")
@@ -9,66 +12,10 @@
       }, true);
 
     if (validCustomer) {
-      // Create the new expense
-      var newCustomer = component.get("v.newCustomer");
-
       var label = event.getSource().get("v.label");
-      var action;
-      switch (label) {
-        case "Log In":
-          {
-            action = component.get("c.shopLogIn");
-          }
-          break;
-        case "Sing Up":
-          {
-            action = component.get("c.shopSingUp");
-          }
-          break;
-        default:
-          alert("Error");
-      }
-
-      action.setParams({
-        newCustomer: newCustomer
-      });
-      action.setCallback(this, function(response) {
-        var state = response.getState();
-        if (state === "SUCCESS") {
-          var newCustomer = response.getReturnValue();
-          component.set("v.newCustomer", newCustomer);
-          helper.helperLogInEvent(
-            component,
-            event,
-            helper,
-            newCustomer.Id,
-            false
-          );
-        } else {
-          component.set("v.newCustomer", {
-            sobjectType: "myCustomer__c",
-            Name: "",
-            Password__c: "",
-            Id: ""
-          });
-          var state = response.getError();
-          switch (label) {
-            case "Log In":
-              {
-                alert("Invalid information");
-              }
-              break;
-            case "Sing Up":
-              {
-                alert("answer " + state[0].message);
-              }
-              break;
-            default:
-              alert("Error");
-          }
-        }
-      });
-      $A.enqueueAction(action);
+      let type = "From LogIn";
+      helper.helperLoginProcess(component, event, helper, [label, type]);
+      console.log("test");
     }
   },
   handleLogOut: function(component, event, helper) {
@@ -78,6 +25,21 @@
       Name: "",
       Password__c: ""
     });
-    helper.helperLogInEvent(component, event, helper, "", true);
+    let Id = "";
+    let status = true;
+    let type = "From LogIn";
+    helper.helperLogInEvent(component, event, helper, [Id, status, type]);
+  },
+  handleLogInFromModalEvent: function(component, event, helper) {
+    console.log("test3");
+    var infoUser = event.getParam("infoUser");
+    var newCustomer = component.get("v.newCustomer");
+    newCustomer.Name = infoUser.Name;
+    newCustomer.Password__c = infoUser.Password__c;
+    component.set("v.newCustomer", newCustomer);
+    console.log("test4");
+    let label = "Log In";
+    let type = "From Modal";
+    helper.helperLoginProcess(component, event, helper, [label, type]);
   }
 });

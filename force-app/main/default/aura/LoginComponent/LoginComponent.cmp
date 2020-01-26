@@ -11,6 +11,10 @@
     default="{ 'sobjectType': 'myCustomer__c',
     'Id':'',  'Name': '',  'Password__c': ''}"
   />
+  <aura:handler
+  event="c:logInFromModalEvent"
+  action="{!c.handleLogInFromModalEvent}"
+/>
   <c:myHeader header="Login Window" />
   <aura:if isTrue="{!v.logOut}">
     <div class="inner-div">

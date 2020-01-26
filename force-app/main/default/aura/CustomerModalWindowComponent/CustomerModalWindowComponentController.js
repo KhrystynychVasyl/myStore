@@ -31,8 +31,63 @@
         break;
     }
   },
+  handleClickOrder: function(component, event, helper) {
+    let userType = event.getSource().getLocalId();
+    console.log(userType);
+    var validInfo = component
+      .find(`${userType}Info`)
+      .reduce(function(validSoFar, inputCmp) {
+        // Displays error messages for invalid fields
+        inputCmp.showHelpMessageIfInvalid();
+        return validSoFar && inputCmp.get("v.validity").valid;
+      }, true);
+    if (validInfo) {
+      var customer = component.get(`v.${userType}`);
+      var appEvent = $A.get("e.c:customerInfoUpdateEvent");
+      appEvent.setParams({
+        infoUser: customer
+      });
+      appEvent.fire();
+      console.log("test1");
+      console.log(userType);
+
+      switch (userType) {
+        case "anonymousCustomer":
+          {
+            // component.set(`v.${userType}`, {
+            //   sobjectType: "myCustomer__c",
+            //   Id: "a003X0000132iynQAA",
+            //   Contact_Name__c: "",
+            //   Phone__c: "",
+            //   email__c: ""
+            // });
+            component.set("v.isOpen", false);
+          }
+          break;
+        case "newCustomer":
+          {
+            console.log("test2.5");
+            console.log(JSON.stringify(customer));
+
+            var appInnerEvent = $A.get("e.c:logInFromModalEvent");
+            appInnerEvent.setParams({
+              infoUser: customer
+            });
+            console.log("test3" + JSON.stringify(customer));
+            appInnerEvent.fire();
+          }
+          break;
+      }
+    }
+  },
   handleClick: function(component, event, helper) {
     let action = event.getSource().get("v.label");
     console.log(action);
+  },
+  handleLogInEvent: function(component, event, helper) {
+    if (component.get("v.isOpen")) {
+      console.log("modalclose");
+      component.set("v.isOpen", false);
+    }
   }
 });

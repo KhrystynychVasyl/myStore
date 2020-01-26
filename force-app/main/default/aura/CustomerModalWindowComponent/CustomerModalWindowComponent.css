@@ -1,5 +1,6 @@
 .THIS .flex-center {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+
   margin: 5px;
 }
