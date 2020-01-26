@@ -1,0 +1,23 @@
+.THIS.cart-block {
+    margin: 5px;
+    padding: 5px;
+    border: black 1px solid;
+    border-radius: 5px;
+  }
+  .THIS .inner-div {
+    margin: 2px;
+    padding: 2px;
+    border: black 1px solid;
+    border-radius: 5px;
+  }
+  
+  .THIS .flex-right {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .THIS .flex-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }

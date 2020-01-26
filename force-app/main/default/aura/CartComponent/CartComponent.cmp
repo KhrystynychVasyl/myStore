@@ -9,7 +9,7 @@
     type="myCustomer__c"
     default="{ 'sobjectType': 'myCustomer__c',
     'Name': '',
-    'password__c': ''}"
+    'email__c': ''}"
   />
   <aura:attribute
     name="newOrder"
@@ -88,18 +88,18 @@
               />
               <lightning:input
                 aura:id="newCustomerForm"
-                label="Customer Password"
+                label="Customer Email"
                 name="newCustomerPassword"
-                value="{!v.newCustomer.password__c}"
+                value="{!v.newCustomer.email__c}"
                 required="true"
               />
-              <lightning:input
+              <!-- <lightning:input
                 aura:id="newCustomerForm"
                 label="Order Name"
                 name="newCustomerOrderName"
                 value="{!v.newOrder.Name}"
                 required="true"
-              />
+              /> -->
             </form>
           </fieldset>
         </div>

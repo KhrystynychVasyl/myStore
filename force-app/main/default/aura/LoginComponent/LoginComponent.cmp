@@ -1,0 +1,62 @@
+<aura:component
+  controller="LogInController"
+  implements="forceCommunity:availableForAllPageTypes"
+  access="global"
+>
+  <aura:attribute name="logOut" type="Boolean" default="true" />
+  <aura:attribute
+    name="newCustomer"
+    type="myCustomer__c"
+    default="{ 'sobjectType': 'myCustomer__c',
+  'Name': '',
+  'Password__c': ''}"
+  />
+  <c:myHeader header="Login Window" />
+  <aura:if isTrue="{!v.logOut}">
+    <div class="inner-div">
+      <div class="inner-div flex-right">
+        <div class="inner-div">
+          <lightning:input
+            aura:id="newCustomerForm"
+            label="Customer Name"
+            name="newCustomerName"
+            value="{!v.newCustomer.Name}"
+            required="true"
+          />
+          <lightning:input
+            aura:id="newCustomerForm"
+            label="Customer Password"
+            name="newCustomerPassword"
+            value="{!v.newCustomer.Password__c}"
+            required="true"
+          />
+        </div>
+        <div class="flex-column inner-div">
+          <lightning:button
+            label="Log In"
+            variant="success"
+            onclick="{!c.handleLoginClick}"
+          />
+          <lightning:button
+          label="Sing Up"
+          variant="success"
+          onclick="{!c.handleLoginClick}"
+        />
+        </div>
+      </div>
+    </div>
+
+    <aura:set attribute="else">
+      <div class="inner-div">
+        <div class="inner-div flex-center">
+          <lightning:button
+            variant="destructive"
+            label="Log Out"
+            title="Destructive action"
+            onclick="{! c.handleClick }"
+          />
+        </div>
+      </div>
+    </aura:set>
+  </aura:if>
+</aura:component>

@@ -2,7 +2,7 @@ public with sharing class CartController {
     @AuraEnabled
     public static myCustomer__c getNewCustomer(myCustomer__c newCustomer) {
         myCustomer__c newcust = new myCustomer__c(Name = newCustomer.name, 
-                                    password__c = newCustomer.password__c);
+                                    email__c = newCustomer.email__c);
         insert newCust;
 		return  newCust;        
     }
