@@ -1,0 +1,5 @@
+.THIS .flex-center {
+  display: flex;
+  justify-content: center;
+  margin: 5px;
+}

@@ -12,14 +12,14 @@
   },
 
   helperOrderSubmitted: function(component, event, helper) {
-    this.helperOrderWindowInformationToggleHide(component, event, helper);
+    this.helperOrderWindowInformationToggleHide(component, event, helper, true);
     var cartList = component.get("v.cartList");
-    carlist = [];
-    component.set("v.cartList", carlist);
+    cartList = [];
+    component.set("v.cartList", cartList);
   },
-  helperOrderWindowInformationToggleHide: function(component, event, helper) {
+  helperOrderWindowInformationToggleHide: function(component, event, helper, status) {
     var truthy = component.get("v.truthy");
-    truthy = !truthy;
+    truthy = status;
     component.set("v.truthy", truthy);
   }
 });

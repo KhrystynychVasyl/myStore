@@ -60,7 +60,7 @@
               break;
             case "Sing Up":
               {
-                alert(state[0].message);
+                alert("answer " + state[0].message);
               }
               break;
             default:

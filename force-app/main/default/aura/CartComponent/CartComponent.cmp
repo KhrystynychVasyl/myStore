@@ -26,10 +26,12 @@
   />
   <aura:handler event="c:logInEvent" action="{!c.handleLogInEvent}" />
   <aura:handler event="c:cartListChange" action="{!c.handleCartListChange}" />
+  <aura:attribute name="isOpen" type="boolean" default="false" />
 
   <!-- <aura:handler name="init" action="{!c.doInit}" value="{!this}" /> -->
 
   <c:myHeader header="Cart Window" />
+  <c:CustomerModalWindowComponent isOpen="{!v.isOpen}" />
   <div class="cart-block">
     <aura:if isTrue="{!v.truthy}">
       <div class="inner-div">

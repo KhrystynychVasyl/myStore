@@ -9,7 +9,8 @@
             helper.helperOrderWindowInformationToggleHide(
               component,
               event,
-              helper
+              helper,
+              false
             );
           } else {
             alert("Empty Order List");
@@ -26,7 +27,8 @@
           helper.helperOrderWindowInformationToggleHide(
             component,
             event,
-            helper
+            helper,
+            true
           );
         }
         break;
@@ -34,6 +36,9 @@
         {
           console.log(JSON.stringify(component.get("v.newOrder")));
           console.log(JSON.stringify(component.get("v.newCustomer")));
+          var isOpen = component.get("v.isOpen");
+          isOpen = true;
+          component.set("v.isOpen", isOpen);
         }
         break;
     }
@@ -64,7 +69,16 @@
   handleLogInEvent: function(component, event, helper) {
     let newCustomer = component.get("v.newCustomer");
     let Id = event.getParam("Id");
+    if (Id === "") {
+      helper.helperOrderWindowInformationToggleHide(
+        component,
+        event,
+        helper,
+        true
+      );
+    }
     newCustomer.Id = Id;
+
     component.set("v.newCustomer", newCustomer);
   },
   handleCartListChange: function(component, event, helper) {
@@ -114,7 +128,6 @@
               var state = response.getState();
               if (state === "SUCCESS") {
                 var getOrderProductList = response.getReturnValue();
-
                 helper.helperOrderSubmitted(component, event, helper);
               } else {
                 alert("Error");
