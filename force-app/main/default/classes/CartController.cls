@@ -9,6 +9,26 @@ public with sharing class CartController {
 
     return newOrder;
   }
+  @AuraEnabled
+  public static String getOrderProductList(
+    List<Map<String, String>> OrderProduct
+  ) {
+
+    List<myOrder_product__c> addList = new List<myOrder_product__c>();
+
+    for (Map<String, String> orderItem : OrderProduct) {
+      myOrder_product__c addItem = new myOrder_product__c();
+      addItem.Name = orderItem.get('Name');
+      addItem.Quantity__c = integer.valueof(orderItem.get('Quantity__c'));
+      addItem.order__c = orderItem.get('order__c');
+      addItem.product__c = orderItem.get('product__c');
+      addList.add(addItem);
+    }
+
+    insert addList;
+
+    return 'ENDDDDDDDD';
+  }
 }
 
 /*

@@ -14,23 +14,6 @@
 
   <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
   <c:myHeader header="Categories Filter" />
-  <!-- <div>
-    <aura:iteration items="{!v.categories}" var="category">
-      <lightning:button
-        aura:id="{!category.Id}"
-        variant="base"
-        label="{!category.Name}"
-        title="Base action"
-        onclick="{! c.handleClick }"
-      />
-      <pre
-          >ID :{!category.Id} 
-          Name :{!category.Name} 
-          ParentId :{!category.myCategory__r.Id} 
-          ParentName :{!category.myCategory__r.Name}</pre
-        >
-    </aura:iteration>
-  </!-->
   <div class="category-block">
     <aura:iteration items="{!v.categoriesTree}" var="category">
       <span class="category-item">

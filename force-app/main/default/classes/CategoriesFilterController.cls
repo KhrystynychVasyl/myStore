@@ -10,6 +10,6 @@ public with sharing class CategoriesFilterController {
   @AuraEnabled
   public static List<myProduct__c> getProducts() {
     // Perform isAccessible() checking first, then
-    return [SELECT Id, Name, category__r.Name,category__r.Id FROM myProduct__c];
+    return [SELECT Id, category__r.Name,category__r.Id FROM myProduct__c];
   }
 }

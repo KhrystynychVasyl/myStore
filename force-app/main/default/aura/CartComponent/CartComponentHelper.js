@@ -11,5 +11,10 @@
     component.set("v.totalPrice", totalPrice);
   },
 
-  helperMethod: function() {}
+  getProductToOrderList: function(component, event, helper) {
+
+    //var act = component.get("c.getNewOrder");
+
+
+  }
 });

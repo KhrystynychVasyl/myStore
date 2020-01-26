@@ -17,6 +17,9 @@
     </div>
     <div class="actionButton">
       <lightning:input
+        type="number"
+        min="1"
+        step="1"
         aura:id="quantity"
         name="quantity"
         value="{!v.quantity}"
