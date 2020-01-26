@@ -7,6 +7,7 @@
         inputCmp.showHelpMessageIfInvalid();
         return validSoFar && inputCmp.get("v.validity").valid;
       }, true);
+
     if (validCustomer) {
       // Create the new expense
       var newCustomer = component.get("v.newCustomer");
@@ -42,9 +43,27 @@
           component.set(
             "v.newCustomer",
 
-            { sobjectType: "myCustomer__c", Name: "", Password__c: "" }
+            { sobjectType: "myCustomer__c", Name: "", Password__c: "", Id: "" }
           );
-          alert("Invalid information");
+
+          var state = response.getError();
+
+          console.log(JSON.stringify(state));
+
+          switch (label) {
+            case "Log In":
+              {
+                alert("Invalid information");
+              }
+              break;
+            case "Sing Up":
+              {
+                alert(state[0].message);
+              }
+              break;
+            default:
+              alert("Error");
+          }
         }
       });
       $A.enqueueAction(action);

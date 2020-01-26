@@ -25,3 +25,8 @@
   display: flex;
   justify-content: center;
 }
+
+.THIS .flex-column {
+  display: flex;
+  flex-direction: column;
+}

@@ -8,14 +8,16 @@
     name="newCustomer"
     type="myCustomer__c"
     default="{ 'sobjectType': 'myCustomer__c',
-    'Name': '',
-    'email__c': ''}"
+    'Id':'a003X0000132i8zQAA',
+    'Name': 'test',
+    'Password__c': 'test'}"
   />
   <aura:attribute
     name="newOrder"
     type="myorder__c"
     default="{ 'sobjectType': 'myorder__c',
-    'Name': ''}"
+    'Name': '',
+  'Additional_Information__c': ''}"
   />
   <aura:attribute name="truthy" type="Boolean" default="true" />
   <aura:attribute name="totalPrice" type="Integer" default="0" />
@@ -23,13 +25,7 @@
     event="c:addItemToCartEvent"
     action="{!c.handleApplicationEvent}"
   />
-  <aura:handler
-  event="c:cartListChange"
-  action="{!c.handleCartListChange}"
-/>
-
-
-
+  <aura:handler event="c:cartListChange" action="{!c.handleCartListChange}" />
 
   <!-- <aura:handler name="init" action="{!c.doInit}" value="{!this}" /> -->
 
@@ -49,10 +45,10 @@
             onclick="{! c.handleClick }"
           />
           <lightning:button
-          variant="destructive"
-          label="Clear Order"
-          onclick="{! c.handleClick }"
-        />
+            variant="destructive"
+            label="Clear Order"
+            onclick="{! c.handleClick }"
+          />
         </div>
       </div>
       <aura:if isTrue="{!v.cartList[0]}">
@@ -68,40 +64,24 @@
         />
       </aura:iteration>
       <aura:set attribute="else">
-        <div aria-labelledby="newCustomer">
-          <h3 style="text-align: center;">Enter Your Information</h3>
-          <fieldset class="slds-box slds-theme--default slds-container--small">
-            <legend
-              id="newCustomer"
-              class="slds-text-heading--small 
-          slds-p-vertical--medium"
-            >
-              Customer Info
-            </legend>
-            <form class="slds-form--stacked">
-              <lightning:input
-                aura:id="newCustomerForm"
-                label="Customer Name"
-                name="newCustomerName"
-                value="{!v.newCustomer.Name}"
-                required="true"
-              />
-              <lightning:input
-                aura:id="newCustomerForm"
-                label="Customer Email"
-                name="newCustomerPassword"
-                value="{!v.newCustomer.email__c}"
-                required="true"
-              />
-              <!-- <lightning:input
-                aura:id="newCustomerForm"
-                label="Order Name"
-                name="newCustomerOrderName"
-                value="{!v.newOrder.Name}"
-                required="true"
-              /> -->
-            </form>
-          </fieldset>
+        <div class="flex-column">
+          <h2 style="text-align: center;">Order Details</h2>
+          <div class="inner-div">
+            <lightning:input
+              aura:id="newOrderForm"
+              label="Order Name"
+              name="newCustomerOrderName"
+              value="{!v.newOrder.Name}"
+              required="true"
+            />
+            <lightning:input
+              aura:id="newOrderForm"
+              label="Additional Information"
+              name="newCustomerOrderName"
+              value="{!v.newOrder.Additional_Information__c}"
+              required="true"
+            />
+          </div>
         </div>
         <div class="inner-div">
           <div class="inner-div flex-center">
@@ -119,7 +99,7 @@
             <lightning:button
               label="Confirm Order"
               variant="success"
-              onclick="{!c.createCustomer}"
+              onclick="{!c.createOrder}"
             />
           </div>
           <ul>

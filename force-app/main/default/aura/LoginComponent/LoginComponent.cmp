@@ -8,8 +8,7 @@
     name="newCustomer"
     type="myCustomer__c"
     default="{ 'sobjectType': 'myCustomer__c',
-  'Name': '',
-  'Password__c': ''}"
+    'Id':'',  'Name': '',  'Password__c': ''}"
   />
   <c:myHeader header="Login Window" />
   <aura:if isTrue="{!v.logOut}">
@@ -38,17 +37,17 @@
             onclick="{!c.handleLoginClick}"
           />
           <lightning:button
-          label="Sing Up"
-          variant="success"
-          onclick="{!c.handleLoginClick}"
-        />
+            label="Sing Up"
+            variant="success"
+            onclick="{!c.handleLoginClick}"
+          />
         </div>
       </div>
     </div>
 
     <aura:set attribute="else">
       <div class="inner-div">
-        <div class="inner-div flex-center">
+        <div class="inner-div flex-right">
           <lightning:button
             variant="destructive"
             label="Log Out"
