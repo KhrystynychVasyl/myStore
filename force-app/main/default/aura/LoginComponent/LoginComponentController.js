@@ -37,19 +37,16 @@
         if (state === "SUCCESS") {
           var newCustomer = response.getReturnValue();
           component.set("v.newCustomer", newCustomer);
-          console.log(JSON.stringify(newCustomer));
           component.set("v.logOut", false);
+          helper.helperLogInEvent(component, event, helper, newCustomer.Id);
         } else {
-          component.set(
-            "v.newCustomer",
-
-            { sobjectType: "myCustomer__c", Name: "", Password__c: "", Id: "" }
-          );
-
+          component.set("v.newCustomer", {
+            sobjectType: "myCustomer__c",
+            Name: "",
+            Password__c: "",
+            Id: ""
+          });
           var state = response.getError();
-
-          console.log(JSON.stringify(state));
-
           switch (label) {
             case "Log In":
               {

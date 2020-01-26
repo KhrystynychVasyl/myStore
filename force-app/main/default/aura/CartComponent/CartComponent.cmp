@@ -8,9 +8,7 @@
     name="newCustomer"
     type="myCustomer__c"
     default="{ 'sobjectType': 'myCustomer__c',
-    'Id':'a003X0000132i8zQAA',
-    'Name': 'test',
-    'Password__c': 'test'}"
+    'Id':'a003X0000132i8zQAA'}"
   />
   <aura:attribute
     name="newOrder"
@@ -23,8 +21,12 @@
   <aura:attribute name="totalPrice" type="Integer" default="0" />
   <aura:handler
     event="c:addItemToCartEvent"
-    action="{!c.handleApplicationEvent}"
+    action="{!c.handleAddItemToCartEvent}"
   />
+  <aura:handler
+  event="c:logInEvent"
+  action="{!c.handleLogInEvent}"
+/>
   <aura:handler event="c:cartListChange" action="{!c.handleCartListChange}" />
 
   <!-- <aura:handler name="init" action="{!c.doInit}" value="{!this}" /> -->

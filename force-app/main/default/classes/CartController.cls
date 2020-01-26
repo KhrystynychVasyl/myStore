@@ -1,57 +1,13 @@
 public with sharing class CartController {
   @AuraEnabled
-  public static String getNewOrder(
-    String Id,
-    String Name,
-    String AddInformation
-  ) {
+  public static myorder__c getNewOrder(Map<String, String> obj) {
     myorder__c newOrder = new myorder__c();
-    newOrder.Name = Name;
-    newOrder.customer__c = Id;
-    newOrder.Additional_Information__c = AddInformation;
+    newOrder.customer__c = obj.get('Id');
+    newOrder.Name = obj.get('OrderName');
+    newOrder.Additional_Information__c = Obj.get('AddInformation');
     insert newOrder;
-    
-    return 'USER ID :';
 
-    //         System.debug(v);
-
-    //     myCustomer__c test = [SELECT Id FROM myCustomer__c WHERE Id = :v.Id];
-    //     //getNewOrder(Map<String, String> v)
-
-    //     myorder__c newOrder = new myorder__c(
-    //       Name = 'ads',
-    //       Additional_Information__c = 'adsasd'
-    //     );
-    // newOrder.customer__c = test.Id;
-    //     insert newOrder;
-
-    // myorder__c newOrder = new myorder__c(
-    //   Name = v.get('OrderName'),
-    //   //   customer__c = v.get('Id'),
-    //   customer__c = 'a003X0000132i8zQAA',
-    //   Additional_Information__c = v.get('AddInformation')
-    // );
-
-    // insert newOrder;
-
-    // newOrder.customer__c = v.get('Id');
-    // newOrder.Name = v.get('OrderName');
-    // newOrder.;
-
-    //insert newOrder;
-    // myorder__c newOrd = new myorder__c();
-    // myCustomer__c newCustomer = [SELECT Name,Id FROM myCustomer__c WHERE Id=:Id];
-    // newOrd.Name = newCustomer.Name;
-    // newOrd.customer__c = newCustomer.Id;
-    // insert newOrd;
-    // return newOrd;
-    // v.get('Id');
-
-    //newOrder.customer__c +
-    //'; Order Name :' +
-    //newOrder.Name +
-    //'; Order AddInformation :' +
-    //newOrder.Additional_Information__c;
+    return newOrder;
   }
 }
 

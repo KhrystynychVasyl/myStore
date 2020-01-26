@@ -3,6 +3,7 @@
   implements="forceCommunity:availableForAllPageTypes"
   access="global"
 >
+<aura:registerEvent name="logInEvent" type="c:logInEvent" />
   <aura:attribute name="logOut" type="Boolean" default="true" />
   <aura:attribute
     name="newCustomer"

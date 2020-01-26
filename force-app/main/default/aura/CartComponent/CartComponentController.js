@@ -4,9 +4,14 @@
     switch (action) {
       case "Create Order":
         {
-          var truthy = component.get("v.truthy");
-          truthy = false;
-          component.set("v.truthy", truthy);
+          let cartList = component.get("v.cartList");
+          if (cartList.length > 0) {
+            var truthy = component.get("v.truthy");
+            truthy = false;
+            component.set("v.truthy", truthy);
+          } else {
+            alert("Empty Order List");
+          }
         }
         break;
       case "Clear Order":
@@ -29,7 +34,7 @@
         break;
     }
   },
-  handleApplicationEvent: function(component, event, helper) {
+  handleAddItemToCartEvent: function(component, event, helper) {
     var obj = event.getParam("obj");
 
     var productItem = obj.productItem;
@@ -47,70 +52,44 @@
           product: productItem
         }
       });
-      var totalPrice = component.get("v.totalPrice");
-      totalPrice = cartList.reduce(
-        (acc, cur) => acc + cur.product.product.price__c * cur.product.quantity,
-        0
-      );
-      component.set("v.totalPrice", totalPrice);
       component.set("v.cartList", cartList);
+
+      helper.helperTotalPriceCount(component, event, helper);
     }
   },
+  handleLogInEvent: function(component, event, helper) {
+    let newCustomer = component.get("v.newCustomer");
+    let Id = event.getParam("Id");
+    newCustomer.Id = Id;
+    component.set("v.newCustomer", newCustomer);
+  },
   handleCartListChange: function(component, event, helper) {
-    var cartList = component.get("v.cartList");
-    var totalPrice = component.get("v.totalPrice");
-    totalPrice = cartList
-      .reduce(
-        (acc, cur) => acc + cur.product.product.price__c * cur.product.quantity,
-        0
-      )
-      .toFixed(2);
-    component.set("v.totalPrice", totalPrice);
+    helper.helperTotalPriceCount(component, event, helper);
   },
   createOrder: function(component, event, helper) {
-    var validCustomer = component
+    var validOrder = component
       .find("newOrderForm")
       .reduce(function(validSoFar, inputCmp) {
-        // Displays error messages for invalid fields
         inputCmp.showHelpMessageIfInvalid();
         return validSoFar && inputCmp.get("v.validity").valid;
       }, true);
 
-    if (validCustomer) {
-      // Create the new expense
+    if (validOrder) {
       var newCustomer = component.get("v.newCustomer");
       var newOrder = component.get("v.newOrder");
       var act = component.get("c.getNewOrder");
-      // console.log(JSON.stringify(newCustomer));
 
-      // console.log(JSON.stringify(newOrder));
-      // let obj = {
-      //   Id: newCustomer.Id,
-      //   Name: newCustomer.Name,
-      //   Password: newCustomer.Password__c,
-      //   OrderName: newOrder.Name,
-      //   AddInformation: newOrder.Additional_Information__c
-      // };
-
-      console.log(
-        "before: " +
-          JSON.stringify({
-            Id: newCustomer.Id,
-            Name: newCustomer.Name,
-            AddInformation: newOrder.Additional_Information__c
-          })
-      );
-      act.setParams({
+      let obj = {
         Id: newCustomer.Id,
-        Name: newCustomer.Name,
+        OrderName: newOrder.Name,
         AddInformation: newOrder.Additional_Information__c
-      });
+      };
+      act.setParams({ obj: obj });
       act.setCallback(this, function(response) {
         var state = response.getState();
         if (state === "SUCCESS") {
           var newOrder = response.getReturnValue();
-          console.log("after: " + JSON.stringify(newOrder));
-          // component.set("v.newOrder", newOrder);
+          component.set("v.newOrder", newOrder);
         }
       });
       $A.enqueueAction(act);
