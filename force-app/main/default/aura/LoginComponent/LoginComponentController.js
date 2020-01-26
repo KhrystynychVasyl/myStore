@@ -37,8 +37,13 @@
         if (state === "SUCCESS") {
           var newCustomer = response.getReturnValue();
           component.set("v.newCustomer", newCustomer);
-          component.set("v.logOut", false);
-          helper.helperLogInEvent(component, event, helper, newCustomer.Id);
+          helper.helperLogInEvent(
+            component,
+            event,
+            helper,
+            newCustomer.Id,
+            false
+          );
         } else {
           component.set("v.newCustomer", {
             sobjectType: "myCustomer__c",
@@ -65,5 +70,14 @@
       });
       $A.enqueueAction(action);
     }
+  },
+  handleLogOut: function(component, event, helper) {
+    component.set("v.newCustomer", {
+      sobjectType: "myCustomer__c",
+      Id: "",
+      Name: "",
+      Password__c: ""
+    });
+    helper.helperLogInEvent(component, event, helper, "", true);
   }
 });

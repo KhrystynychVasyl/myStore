@@ -6,9 +6,11 @@
         {
           let cartList = component.get("v.cartList");
           if (cartList.length > 0) {
-            var truthy = component.get("v.truthy");
-            truthy = false;
-            component.set("v.truthy", truthy);
+            helper.helperOrderWindowInformationToggleHide(
+              component,
+              event,
+              helper
+            );
           } else {
             alert("Empty Order List");
           }
@@ -21,9 +23,11 @@
         break;
       case "Back to Order":
         {
-          var truthy = component.get("v.truthy");
-          truthy = true;
-          component.set("v.truthy", truthy);
+          helper.helperOrderWindowInformationToggleHide(
+            component,
+            event,
+            helper
+          );
         }
         break;
       case "Info":
@@ -67,60 +71,62 @@
     helper.helperTotalPriceCount(component, event, helper);
   },
   createOrder: function(component, event, helper) {
-    var validOrder = component
-      .find("newOrderForm")
-      .reduce(function(validSoFar, inputCmp) {
-        inputCmp.showHelpMessageIfInvalid();
-        return validSoFar && inputCmp.get("v.validity").valid;
-      }, true);
+    if (component.get("v.newCustomer").Id) {
+      var validOrder = component
+        .find("newOrderForm")
+        .reduce(function(validSoFar, inputCmp) {
+          inputCmp.showHelpMessageIfInvalid();
+          return validSoFar && inputCmp.get("v.validity").valid;
+        }, true);
 
-    if (validOrder) {
-      var newCustomer = component.get("v.newCustomer");
-      var newOrder = component.get("v.newOrder");
-      var act = component.get("c.getNewOrder");
+      if (validOrder) {
+        var newCustomer = component.get("v.newCustomer");
+        var newOrder = component.get("v.newOrder");
+        var act = component.get("c.getNewOrder");
 
-      let obj = {
-        Id: newCustomer.Id,
-        OrderName: newOrder.Name,
-        AddInformation: newOrder.Additional_Information__c
-      };
-      act.setParams({ obj: obj });
-      act.setCallback(this, function(response) {
-        var state = response.getState();
-        if (state === "SUCCESS") {
-          var newOrder = response.getReturnValue();
-          component.set("v.newOrder", newOrder);
+        let obj = {
+          Id: newCustomer.Id,
+          OrderName: newOrder.Name,
+          AddInformation: newOrder.Additional_Information__c
+        };
+        act.setParams({ obj: obj });
+        act.setCallback(this, function(response) {
+          var state = response.getState();
+          if (state === "SUCCESS") {
+            var newOrder = response.getReturnValue();
+            component.set("v.newOrder", newOrder);
 
-          let OrderProduct = component.get("v.OrderProduct");
-          let cartList = component.get("v.cartList");
+            let OrderProduct = component.get("v.OrderProduct");
+            let cartList = component.get("v.cartList");
 
-          cartList.forEach((element, index) =>
-            OrderProduct.push({
-              Name: newCustomer.Id + " " + Date.now() + " " + index,
-              Quantity__c: element.product.quantity,
-              order__c: newOrder.Id,
-              product__c: element.product.product.Id
-            })
-          );
+            cartList.forEach((element, index) =>
+              OrderProduct.push({
+                Name: newCustomer.Id + " " + Date.now() + " " + index,
+                Quantity__c: element.product.quantity,
+                order__c: newOrder.Id,
+                product__c: element.product.product.Id
+              })
+            );
 
-          console.log(JSON.stringify(OrderProduct));
+            var action = component.get("c.getOrderProductList");
+            action.setParams({ OrderProduct: OrderProduct });
+            action.setCallback(this, function(response) {
+              var state = response.getState();
+              if (state === "SUCCESS") {
+                var getOrderProductList = response.getReturnValue();
 
-          var action = component.get("c.getOrderProductList");
-          action.setParams({ OrderProduct: OrderProduct });
-          action.setCallback(this, function(response) {
-            var state = response.getState();
-            if (state === "SUCCESS") {
-              var getOrderProductList = response.getReturnValue();
-
-              console.log("getOrderProductList :" + getOrderProductList);
-            } else {
-              alert("Error");
-            }
-          });
-          $A.enqueueAction(action);
-        }
-      });
-      $A.enqueueAction(act);
+                helper.helperOrderSubmitted(component, event, helper);
+              } else {
+                alert("Error");
+              }
+            });
+            $A.enqueueAction(action);
+          }
+        });
+        $A.enqueueAction(act);
+      }
+    } else {
+      alert("you need to LogIn");
     }
   }
 });

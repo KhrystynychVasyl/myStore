@@ -53,7 +53,7 @@
             variant="destructive"
             label="Log Out"
             title="Destructive action"
-            onclick="{! c.handleClick }"
+            onclick="{! c.handleLogOut }"
           />
         </div>
       </div>

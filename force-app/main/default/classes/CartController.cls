@@ -10,7 +10,7 @@ public with sharing class CartController {
     return newOrder;
   }
   @AuraEnabled
-  public static String getOrderProductList(
+  public static List<myOrder_product__c> getOrderProductList(
     List<Map<String, String>> OrderProduct
   ) {
 
@@ -26,8 +26,7 @@ public with sharing class CartController {
     }
 
     insert addList;
-
-    return 'ENDDDDDDDD';
+    return addList;
   }
 }
 

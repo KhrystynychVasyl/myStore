@@ -11,10 +11,15 @@
     component.set("v.totalPrice", totalPrice);
   },
 
-  getProductToOrderList: function(component, event, helper) {
-
-    //var act = component.get("c.getNewOrder");
-
-
+  helperOrderSubmitted: function(component, event, helper) {
+    this.helperOrderWindowInformationToggleHide(component, event, helper);
+    var cartList = component.get("v.cartList");
+    carlist = [];
+    component.set("v.cartList", carlist);
+  },
+  helperOrderWindowInformationToggleHide: function(component, event, helper) {
+    var truthy = component.get("v.truthy");
+    truthy = !truthy;
+    component.set("v.truthy", truthy);
   }
 });
