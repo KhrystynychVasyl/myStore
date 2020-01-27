@@ -1,7 +1,6 @@
 public with sharing class CartController {
   @AuraEnabled
   public static myorder__c getNewOrder(Map<String, String> obj) {
-
     myorder__c newOrder = new myorder__c();
     newOrder.customer__c = obj.get('Id');
     newOrder.Name = obj.get('OrderName');
@@ -16,7 +15,6 @@ public with sharing class CartController {
     upsert updateCustomer;
     insert newOrder;
     return newOrder;
-
   }
   @AuraEnabled
   public static List<myOrder_product__c> getOrderProductList(

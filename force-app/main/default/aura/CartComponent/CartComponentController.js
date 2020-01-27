@@ -127,6 +127,7 @@
     // }
   },
   handleCustomerInfoUpdateEvent: function(component, event, helper) {
+    console.log('cart ')
     var infoUser = event.getParam("infoUser");
     let newCustomer = component.get("v.newCustomer");
     newCustomer.Id = infoUser.Id;
@@ -136,6 +137,7 @@
     component.set("v.newCustomer", newCustomer);
     if (infoUser.Id) {
       console.log("anonym");
+      console.log('cart2 ')
       helper.helperSubmitOrder(component, event, helper);
     } else {
       console.log("need log in action");

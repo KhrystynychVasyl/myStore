@@ -41,24 +41,21 @@
 
     console.log("1anonym");
     let sObject = {
-      newOrder: {
-        customer__c: newCustomer.Id,
-        Name: newOrder.Name,
-        Additional_Information__c: newOrder.Additional_Information__c
-      },
-      updateCustomer: {
-        Id: newCustomer.Id,
-        Contact_Name__c: newCustomer.Contact_Name__c,
-        Phone__c: newCustomer.Phone__c,
-        email__c: newCustomer.email__c
-      }
+      Id: newCustomer.Id,
+      OrderName: newOrder.Name,
+      AddInformation: newOrder.Additional_Information__c,
+      Contact_Name__c: newCustomer.Contact_Name__c,
+      Phone__c: newCustomer.Phone__c,
+      email__c: newCustomer.email__c
     };
     console.log("2anonym  " + JSON.stringify(sObject));
-    act.setParams({ sObject: JSON.stringify(sObject) });
+    act.setParams({ obj: sObject });
+
     act.setCallback(this, function(response) {
+      console.log('2.5anonym ')
       var state = response.getState();
       if (state === "SUCCESS") {
-        console.log("3anonym");
+        console.log("3anonym"  + JSON.stringify(response.getReturnValue()));
         var newOrder = response.getReturnValue();
         component.set("v.newOrder", newOrder);
 

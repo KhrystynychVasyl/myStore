@@ -14,7 +14,10 @@
     <strong></strong>
     <p class="info"
       >Name: {!v.cartItemIn.Name}; Price: {!v.cartItemIn.price__c}; Quantity:
-      <strong>{!v.quantity}</strong>
+      <strong
+        >{!v.quantity}; Total Items Price:
+        {!v.quantity*v.cartItemIn.price__c}</strong
+      >;
     </p>
 
     <div class="flex-center">

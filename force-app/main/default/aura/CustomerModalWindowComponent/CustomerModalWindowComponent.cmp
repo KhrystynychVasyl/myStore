@@ -7,7 +7,7 @@
   <aura:attribute
     name="anonymousCustomer"
     type="myCustomer__c"
-    default="{ 'sobjectType': 'myCustomer__c', 'Id': 'a003X0000132iynQAA',
+    default="{ 'sobjectType': 'myCustomer__c', 'Id': 'a003X0000132mlIQAQ',
     'Contact_Name__c': 'qew', 'Phone__c':'111-111-1111','email__c':'lightning@force.com'}"
   />
   <aura:attribute
