@@ -1,5 +1,6 @@
 ({
   helperTotalPriceCount: function(component, event, helper) {
+    this.helperSaveToCookie(component, event, helper, "cartList");
     var cartList = component.get("v.cartList");
     var totalPrice = component.get("v.totalPrice");
     totalPrice = cartList
@@ -16,6 +17,7 @@
     var cartList = component.get("v.cartList");
     cartList = [];
     component.set("v.cartList", cartList);
+    this.helperSaveToCookie(component, event, helper, "cartList");
   },
   helperOrderWindowInformationToggleHide: function(
     component,
@@ -33,11 +35,10 @@
     component.set("v.isOpen", isOpen);
   },
   helperSubmitOrder: function(component, event, helper) {
-
     var newCustomer = component.get("v.newCustomer");
     var newOrder = component.get("v.newOrder");
     var act = component.get("c.getNewOrder");
-    
+
     console.log("1anonym");
     let obj = {
       Id: newCustomer.Id,
@@ -45,7 +46,7 @@
       AddInformation: newOrder.Additional_Information__c,
       Contact_Name__c: newCustomer.Contact_Name__c,
       Phone__c: newCustomer.Phone__c,
-      email__c:newCustomer.email__c
+      email__c: newCustomer.email__c
     };
     console.log("2anonym  " + JSON.stringify(obj));
     act.setParams({ obj: obj });
@@ -84,5 +85,39 @@
       }
     });
     $A.enqueueAction(act);
+  },
+
+  helperSaveToCookie: function(component, event, helper, name) {
+    let toSave = component.get(`v.${name}`);
+    console.log(toSave.length);
+    console.log(JSON.stringify(toSave));
+    let carlist = JSON.stringify(toSave);
+    this.helperSetCookie(component, event, helper, [name, carlist, 30]);
+  },
+  helperSetCookie: function(component, event, helper, array) {
+    let cname = array[0];
+    let cvalue = array[1];
+    let exdays = array[2];
+
+    //createCookie(cname, "", -1);
+    var d = new Date();
+    d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+    var expires = "expires=" + d.toGMTString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  },
+  helperGetCookie: function(component, event, helper, cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(";");
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
   }
 });

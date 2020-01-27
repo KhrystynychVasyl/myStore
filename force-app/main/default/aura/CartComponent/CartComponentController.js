@@ -1,4 +1,21 @@
 ({
+  doInit: function(component, event, helper) {
+    let someData = helper.helperGetCookie(component, event, helper, "cartList");
+
+    if (someData === "") {
+      alert("empty");
+    } else {
+      console.log(someData);
+      let cartList = JSON.parse(someData);
+      cartList.forEach(el => console.log(el.Id));
+      component.set("v.cartList", cartList);
+    }
+
+    // console.log(typeof JSON.parse(someData));
+    // component.set("v.cartList", someData);
+    alert("START");
+  },
+
   handleClick: function(component, event, helper) {
     var action = event.getSource().get("v.label");
     switch (action) {
@@ -77,8 +94,6 @@
       console.log("almost");
       helper.helperSubmitOrder(component, event, helper);
     } else {
-      
-
       if (Id === "") {
         helper.helperOrderWindowInformationToggleHide(
           component,

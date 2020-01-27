@@ -3,6 +3,17 @@
   implements="forceCommunity:availableForAllPageTypes"
   access="global"
 >
+  <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+  <aura:handler
+    event="c:addItemToCartEvent"
+    action="{!c.handleAddItemToCartEvent}"
+  />
+  <aura:handler
+    event="c:customerInfoUpdateEvent"
+    action="{!c.handleCustomerInfoUpdateEvent}"
+  />
+  <aura:handler event="c:logInEvent" action="{!c.handleLogInEvent}" />
+  <aura:handler event="c:cartListChange" action="{!c.handleCartListChange}" />
   <aura:attribute name="OrderProduct" type="myOrder_product__c[]" />
   <aura:attribute name="cartList" type="Object[]" />
   <aura:attribute
@@ -15,22 +26,11 @@
     type="myorder__c"
     default="{ 'sobjectType': 'myorder__c',
     'Name': 'qew',
-  'Additional_Information__c': 'qew'}"
+    'Additional_Information__c': 'qew'}"
   />
   <aura:attribute name="truthy" type="Boolean" default="true" />
   <aura:attribute name="totalPrice" type="Integer" default="0" />
 
-  
-  <aura:handler
-    event="c:addItemToCartEvent"
-    action="{!c.handleAddItemToCartEvent}"
-  />
-  <aura:handler
-  event="c:customerInfoUpdateEvent"
-  action="{!c.handleCustomerInfoUpdateEvent}"
-/>
-  <aura:handler event="c:logInEvent" action="{!c.handleLogInEvent}" />
-  <aura:handler event="c:cartListChange" action="{!c.handleCartListChange}" />
   <aura:attribute name="isOpen" type="boolean" default="false" />
 
   <!-- <aura:handler name="init" action="{!c.doInit}" value="{!this}" /> -->
