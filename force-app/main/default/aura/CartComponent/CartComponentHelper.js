@@ -42,7 +42,10 @@
     let obj = {
       Id: newCustomer.Id,
       OrderName: newOrder.Name,
-      AddInformation: newOrder.Additional_Information__c
+      AddInformation: newOrder.Additional_Information__c,
+      Contact_Name__c: newCustomer.Contact_Name__c,
+      Phone__c: newCustomer.Phone__c,
+      email__c:newCustomer.email__c
     };
     console.log("2anonym  " + JSON.stringify(obj));
     act.setParams({ obj: obj });

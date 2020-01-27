@@ -5,6 +5,15 @@ public with sharing class CartController {
     newOrder.customer__c = obj.get('Id');
     newOrder.Name = obj.get('OrderName');
     newOrder.Additional_Information__c = Obj.get('AddInformation');
+
+    myCustomer__c updateCustomer = new myCustomer__c();
+    updateCustomer.Id = obj.get('Id');
+    updateCustomer.Contact_Name__c = obj.get('Contact_Name__c');
+    updateCustomer.Phone__c = obj.get('Phone__c');
+    updateCustomer.email__c = obj.get('email__c');
+
+    upsert updateCustomer;
+
     insert newOrder;
 
     return newOrder;
@@ -13,7 +22,6 @@ public with sharing class CartController {
   public static List<myOrder_product__c> getOrderProductList(
     List<Map<String, String>> OrderProduct
   ) {
-
     List<myOrder_product__c> addList = new List<myOrder_product__c>();
 
     for (Map<String, String> orderItem : OrderProduct) {
