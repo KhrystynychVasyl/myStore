@@ -15,7 +15,6 @@
       var label = event.getSource().get("v.label");
       let type = "From LogIn";
       helper.helperLoginProcess(component, event, helper, [label, type]);
-      console.log("test");
     }
   },
   handleLogOut: function(component, event, helper) {
@@ -31,13 +30,11 @@
     helper.helperLogInEvent(component, event, helper, [Id, status, type]);
   },
   handleLogInFromModalEvent: function(component, event, helper) {
-    console.log("test3");
     var infoUser = event.getParam("infoUser");
     var newCustomer = component.get("v.newCustomer");
     newCustomer.Name = infoUser.Name;
     newCustomer.Password__c = infoUser.Password__c;
     component.set("v.newCustomer", newCustomer);
-    console.log("test4");
     let label = "Log In";
     let type = "From Modal";
     helper.helperLoginProcess(component, event, helper, [label, type]);

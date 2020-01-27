@@ -38,22 +38,18 @@
     var newCustomer = component.get("v.newCustomer");
     var newOrder = component.get("v.newOrder");
 
-    //var act = component.get("c.getNewOrder");
-    // console.log("1anonym");
+    var act = component.get("c.addNewOrder");
 
-    // let sObject = {
-    //   Id: newCustomer.Id,
-    //   OrderName: newOrder.Name,
-    //   AddInformation: newOrder.Additional_Information__c,
-    //   Contact_Name__c: newCustomer.Contact_Name__c,
-    //   Phone__c: newCustomer.Phone__c,
-    //   email__c: newCustomer.email__c
-    // };
-    // console.log("2anonym  " + JSON.stringify(sObject));
-    // act.setParams({ obj: sObject });
+    let newOrderProduct = [];
+    let cartList = component.get("v.cartList");
 
-    var act = component.get("c.setOrderCustomerInfo");
-    console.log("1anonym");
+    cartList.forEach((element, index) =>
+      newOrderProduct.push({
+        Name: newCustomer.Id + " " + Date.now() + " " + index,
+        ProductId: element.product.product.Id,
+        Quantity: element.product.quantity
+      })
+    );
 
     let myObject = {
       newUser: {
@@ -66,45 +62,17 @@
         CustomerId: newCustomer.Id,
         OrderName: newOrder.Name,
         AddInformation: newOrder.Additional_Information__c
-      }
+      },
+      newOrder_Product: newOrderProduct
     };
-    console.log("2anonym  " + JSON.stringify(myObject));
 
     act.setParams({ myObject: JSON.stringify([myObject]) });
-
     act.setCallback(this, function(response) {
-      console.log("2.5anonym ");
       var state = response.getState();
       if (state === "SUCCESS") {
-        console.log("3anonym" + JSON.stringify(response.getReturnValue()));
-        var newOrder = response.getReturnValue();
-        component.set("v.newOrder", newOrder);
-
-        let OrderProduct = component.get("v.OrderProduct");
-        let cartList = component.get("v.cartList");
-        console.log("4anonym");
-        cartList.forEach((element, index) =>
-          OrderProduct.push({
-            Name: newCustomer.Id + " " + Date.now() + " " + index,
-            Quantity__c: element.product.quantity,
-            order__c: newOrder.Id,
-            product__c: element.product.product.Id
-          })
-        );
-
-        var action = component.get("c.getOrderProductList");
-        action.setParams({ OrderProduct: OrderProduct });
-        action.setCallback(this, function(response) {
-          var state = response.getState();
-          if (state === "SUCCESS") {
-            console.log("4anonym");
-            var getOrderProductList = response.getReturnValue();
-            this.helperOrderSubmitted(component, event, helper);
-          } else {
-            alert("Error");
-          }
-        });
-        $A.enqueueAction(action);
+        this.helperOrderSubmitted(component, event, helper);
+      } else {
+        alert("Error");
       }
     });
     $A.enqueueAction(act);

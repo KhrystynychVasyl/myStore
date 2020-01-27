@@ -9,13 +9,11 @@
       type: type
     });
     component.set("v.logOut", status);
-    console.log("test8");
     appEvent.fire();
   },
   helperLoginProcess: function(component, event, helper, array) {
     let label = array[0];
     let type = array[1];
-    console.log("test5");
     var newCustomer = component.get("v.newCustomer");
     var action;
     switch (label) {
@@ -32,7 +30,6 @@
       default:
         alert("Error");
     }
-    console.log("test6");
 
     let sendUser = {
       Name: newCustomer.Name,
@@ -45,7 +42,6 @@
     action.setCallback(this, function(response) {
       var state = response.getState();
       if (state === "SUCCESS") {
-        console.log("test7");
         var newCustomer = response.getReturnValue();
         component.set("v.newCustomer", newCustomer);
         console.log(JSON.stringify(newCustomer));

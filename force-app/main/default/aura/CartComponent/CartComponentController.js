@@ -1,7 +1,6 @@
 ({
   doInit: function(component, event, helper) {
     let someData = helper.helperGetCookie(component, event, helper, "cartList");
-
     if (someData === "") {
       alert("empty");
     } else {
@@ -11,10 +10,6 @@
       component.set("v.cartList", cartList);
       helper.helperTotalPriceCount(component, event, helper);
     }
-
-    // console.log(typeof JSON.parse(someData));
-    // component.set("v.cartList", someData);
-    //alert("START");
   },
 
   handleClick: function(component, event, helper) {
@@ -60,7 +55,6 @@
   },
   handleAddItemToCartEvent: function(component, event, helper) {
     var obj = event.getParam("obj");
-
     var productItem = obj.productItem;
     var quantity = obj.quantity;
     var cartList = component.get("v.cartList");
@@ -77,7 +71,6 @@
         }
       });
       component.set("v.cartList", cartList);
-
       helper.helperTotalPriceCount(component, event, helper);
     }
   },
@@ -85,10 +78,6 @@
     let Id = event.getParam("Id");
     let type = event.getParam("type");
     let newCustomer = component.get("v.newCustomer");
-    console.log("test9");
-    console.log(JSON.stringify(type));
-
-    console.log(JSON.stringify(Id));
     if (type === "From Modal") {
       newCustomer.Id = Id;
       component.set("v.newCustomer", newCustomer);
@@ -121,13 +110,11 @@
 
     if (validOrder) {
       helper.helperShowModal(component, event, helper);
+    } else {
+      alert("you need to LogIn");
     }
-    // } else {
-    //   alert("you need to LogIn");
-    // }
   },
   handleCustomerInfoUpdateEvent: function(component, event, helper) {
-    console.log("cart ");
     var infoUser = event.getParam("infoUser");
     let newCustomer = component.get("v.newCustomer");
     newCustomer.Id = infoUser.Id;
@@ -136,45 +123,9 @@
     newCustomer.email__c = infoUser.email__c;
     component.set("v.newCustomer", newCustomer);
     if (infoUser.Id) {
-      console.log("anonym");
-      console.log("cart2 ");
       helper.helperSubmitOrder(component, event, helper);
     } else {
       console.log("need log in action");
     }
   }
-
-  // test: function(component, event, helper) {
-  //   var newCustomer = component.get("v.newCustomer");
-  //   var newOrder = component.get("v.newOrder");
-  //   var act = component.get("c.setOrderCustomerInfo");
-
-  //   console.log("1anonym");
-
-  //   let myObject = {
-  //     newUser: {
-  //       Id: "a003X0000132mlIQAQ",
-  //       Contact_Name: "test4",
-  //       Phone: "111-111-1111",
-  //       email: "lightning@force.com"
-  //     },
-  //     newOrder: {
-  //       CustomerId: "a003X0000132mlIQAQ",
-  //       OrderName: "test2",
-  //       AddInformation: "test3"
-  //     }
-  //   };
-  //   console.log("2anonym  " + JSON.stringify(myObject));
-
-  //   act.setParams({ myObject: JSON.stringify([myObject])});
-
-  //   act.setCallback(this, function(response) {
-  //     console.log("2.5anonym ");
-  //     var state = response.getState();
-  //     if (state === "SUCCESS") {
-  //       console.log("3anonym" + JSON.stringify(response.getReturnValue()));
-  //     }
-  //   });
-  //   $A.enqueueAction(act);
-  // }
 });
