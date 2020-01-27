@@ -37,6 +37,11 @@
 
   <c:myHeader header="Cart Window" />
   <c:CustomerModalWindowComponent isOpen="{!v.isOpen}" />
+  <lightning:button
+  label="TESSSSSSSSSSTTTTTTTTTTTTT"
+  variant="success"
+  onclick="{!c.test}"
+/>
   <div class="cart-block">
     <aura:if isTrue="{!v.truthy}">
       <div class="inner-div">

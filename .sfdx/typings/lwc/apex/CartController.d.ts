@@ -4,3 +4,6 @@ declare module "@salesforce/apex/CartController.getNewOrder" {
 declare module "@salesforce/apex/CartController.getOrderProductList" {
   export default function getOrderProductList(param: {OrderProduct: any}): Promise<any>;
 }
+declare module "@salesforce/apex/CartController.setOrderCustomerInfo" {
+  export default function setOrderCustomerInfo(param: {myObject: any}): Promise<any>;
+}

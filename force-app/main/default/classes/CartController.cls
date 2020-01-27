@@ -34,6 +34,39 @@ public with sharing class CartController {
     insert addList;
     return addList;
   }
+
+  @AuraEnabled
+  public static string setOrderCustomerInfo(String myObject) {
+    List<CustomeObject> newList = (List<CustomeObject>) JSON.deserialize(
+      myObject,
+      List<CustomeObject>.class
+    );
+
+    // CustomeObject myObjectTest = newList.get(0);
+
+    // myorder__c newOrder = new myorder__c();
+    // newOrder.customer__c = myObjectTest.get('Id');
+    // newOrder.Name = myObjectTest.get('OrderName');
+    // newOrder.Additional_Information__c = myObjectTest.get('AddInformation');
+
+    // myCustomer__c updateCustomer = new myCustomer__c();
+    // updateCustomer.Id = myObjectTest.get('Id');
+    // updateCustomer.Contact_Name__c = myObjectTest.get('Contact_Name');
+    // updateCustomer.Phone__c = myObjectTest.get('Phone');
+    // updateCustomer.email__c = myObjectTest.get('email');
+
+    // upsert updateCustomer;
+    // insert newOrder;
+    return newList.get(0).Id;
+  }
+  public class CustomeObject {
+    String Id;
+    String OrderName;
+    String AddInformation;
+    String Contact_Name;
+    String Phone;
+    String email;
+  }
 }
 
 /*

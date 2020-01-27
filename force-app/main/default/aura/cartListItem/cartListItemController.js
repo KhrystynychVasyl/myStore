@@ -32,7 +32,6 @@
           var cartItemIn = component.get("v.cartItemIn");
           cartList = cartList.filter(el => el.Id !== cartItemIn.Id);
           component.set("v.cartList", cartList);
-
           helper.helperCartListChange(component);
         }
         break;
