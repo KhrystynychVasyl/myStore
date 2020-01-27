@@ -33,8 +33,16 @@
         alert("Error");
     }
     console.log("test6");
+
+    console.log(JSON.stringify(newCustomer));
+    let sendUser = {
+      Name: newCustomer.Name,
+      Password__c: newCustomer.Password__c
+    };
+    
+    console.log(JSON.stringify(sendUser));
     action.setParams({
-      newCustomer: newCustomer
+      newCustomer: JSON.stringify([sendUser])
     });
     action.setCallback(this, function(response) {
       var state = response.getState();

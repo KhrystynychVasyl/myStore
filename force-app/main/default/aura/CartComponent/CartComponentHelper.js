@@ -40,16 +40,21 @@
     var act = component.get("c.getNewOrder");
 
     console.log("1anonym");
-    let obj = {
-      Id: newCustomer.Id,
-      OrderName: newOrder.Name,
-      AddInformation: newOrder.Additional_Information__c,
-      Contact_Name__c: newCustomer.Contact_Name__c,
-      Phone__c: newCustomer.Phone__c,
-      email__c: newCustomer.email__c
+    let sObject = {
+      newOrder: {
+        customer__c: newCustomer.Id,
+        Name: newOrder.Name,
+        Additional_Information__c: newOrder.Additional_Information__c
+      },
+      updateCustomer: {
+        Id: newCustomer.Id,
+        Contact_Name__c: newCustomer.Contact_Name__c,
+        Phone__c: newCustomer.Phone__c,
+        email__c: newCustomer.email__c
+      }
     };
-    console.log("2anonym  " + JSON.stringify(obj));
-    act.setParams({ obj: obj });
+    console.log("2anonym  " + JSON.stringify(sObject));
+    act.setParams({ sObject: JSON.stringify(sObject) });
     act.setCallback(this, function(response) {
       var state = response.getState();
       if (state === "SUCCESS") {

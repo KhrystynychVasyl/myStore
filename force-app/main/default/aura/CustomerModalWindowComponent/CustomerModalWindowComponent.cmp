@@ -13,8 +13,8 @@
   <aura:attribute
     name="newCustomer"
     type="myCustomer__c"
-    default="{ 'sobjectType': 'myCustomer__c','Contact_Name__c': 'qew', 
-    'Phone__c':'111-111-1111','email__c':'lightning@force.com','Name': '',  'Password__c': ''}"
+    default="{ 'sobjectType': 'myCustomer__c','Contact_Name__c': '', 
+    'Phone__c':'','email__c':'','Name': '',  'Password__c': ''}"
   />
   <aura:registerEvent
     name="customerInfoUpdateEvent"

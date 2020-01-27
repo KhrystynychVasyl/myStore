@@ -5,15 +5,16 @@
     if (someData === "") {
       alert("empty");
     } else {
-      console.log(someData);
+      //console.log(someData);
       let cartList = JSON.parse(someData);
       cartList.forEach(el => console.log(el.Id));
       component.set("v.cartList", cartList);
+      helper.helperTotalPriceCount(component, event, helper);
     }
 
     // console.log(typeof JSON.parse(someData));
     // component.set("v.cartList", someData);
-    alert("START");
+    //alert("START");
   },
 
   handleClick: function(component, event, helper) {
