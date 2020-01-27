@@ -142,32 +142,39 @@
     } else {
       console.log("need log in action");
     }
-  },
-  test: function(component, event, helper) {
-    var newCustomer = component.get("v.newCustomer");
-    var newOrder = component.get("v.newOrder");
-    var act = component.get("c.setOrderCustomerInfo");
-
-    console.log("1anonym");
-
-    let myObject = {
-      Id: "a003X0000132mlIQAQ",
-      OrderName: "test2",
-      AddInformation: "test3",
-      Contact_Name: "test4",
-      Phone: "111-111-1111",
-      email: "lightning@force.com"
-    };
-    console.log("2anonym  " + JSON.stringify(myObject));
-    act.setParams({ myObject: JSON.stringify([myObject]) });
-
-    act.setCallback(this, function(response) {
-      console.log("2.5anonym ");
-      var state = response.getState();
-      if (state === "SUCCESS") {
-        console.log("3anonym" + JSON.stringify(response.getReturnValue()));
-      }
-    });
-    $A.enqueueAction(act);
   }
+
+  // test: function(component, event, helper) {
+  //   var newCustomer = component.get("v.newCustomer");
+  //   var newOrder = component.get("v.newOrder");
+  //   var act = component.get("c.setOrderCustomerInfo");
+
+  //   console.log("1anonym");
+
+  //   let myObject = {
+  //     newUser: {
+  //       Id: "a003X0000132mlIQAQ",
+  //       Contact_Name: "test4",
+  //       Phone: "111-111-1111",
+  //       email: "lightning@force.com"
+  //     },
+  //     newOrder: {
+  //       CustomerId: "a003X0000132mlIQAQ",
+  //       OrderName: "test2",
+  //       AddInformation: "test3"
+  //     }
+  //   };
+  //   console.log("2anonym  " + JSON.stringify(myObject));
+
+  //   act.setParams({ myObject: JSON.stringify([myObject])});
+
+  //   act.setCallback(this, function(response) {
+  //     console.log("2.5anonym ");
+  //     var state = response.getState();
+  //     if (state === "SUCCESS") {
+  //       console.log("3anonym" + JSON.stringify(response.getReturnValue()));
+  //     }
+  //   });
+  //   $A.enqueueAction(act);
+  // }
 });

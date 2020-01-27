@@ -37,25 +37,46 @@
   helperSubmitOrder: function(component, event, helper) {
     var newCustomer = component.get("v.newCustomer");
     var newOrder = component.get("v.newOrder");
-    var act = component.get("c.getNewOrder");
 
+    //var act = component.get("c.getNewOrder");
+    // console.log("1anonym");
+
+    // let sObject = {
+    //   Id: newCustomer.Id,
+    //   OrderName: newOrder.Name,
+    //   AddInformation: newOrder.Additional_Information__c,
+    //   Contact_Name__c: newCustomer.Contact_Name__c,
+    //   Phone__c: newCustomer.Phone__c,
+    //   email__c: newCustomer.email__c
+    // };
+    // console.log("2anonym  " + JSON.stringify(sObject));
+    // act.setParams({ obj: sObject });
+
+    var act = component.get("c.setOrderCustomerInfo");
     console.log("1anonym");
-    let sObject = {
-      Id: newCustomer.Id,
-      OrderName: newOrder.Name,
-      AddInformation: newOrder.Additional_Information__c,
-      Contact_Name__c: newCustomer.Contact_Name__c,
-      Phone__c: newCustomer.Phone__c,
-      email__c: newCustomer.email__c
+
+    let myObject = {
+      newUser: {
+        Id: newCustomer.Id,
+        Contact_Name: newCustomer.Contact_Name__c,
+        Phone: newCustomer.Phone__c,
+        email: newCustomer.email__c
+      },
+      newOrder: {
+        CustomerId: newCustomer.Id,
+        OrderName: newOrder.Name,
+        AddInformation: newOrder.Additional_Information__c
+      }
     };
-    console.log("2anonym  " + JSON.stringify(sObject));
-    act.setParams({ obj: sObject });
+    console.log("2anonym  " + JSON.stringify(myObject));
+
+    act.setParams({ myObject: JSON.stringify([myObject]) });
 
     act.setCallback(this, function(response) {
-      console.log('2.5anonym ')
+      console.log("2.5anonym ");
       var state = response.getState();
       if (state === "SUCCESS") {
-        console.log("3anonym"  + JSON.stringify(response.getReturnValue()));
+        console.log("3anonym" + JSON.stringify(response.getReturnValue()));
         var newOrder = response.getReturnValue();
         component.set("v.newOrder", newOrder);
 
