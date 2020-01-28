@@ -7,37 +7,18 @@
       var state = response.getState();
       if (state === "SUCCESS") {
         var categories = response.getReturnValue();
-        var Id = "test";
         component.set("v.categories", categories);
 
-        var innerAction = component.get("c.getProducts");
+        helper.helperOnInit(component, event, helper);
 
-        innerAction.setCallback(this, function(innerResponse) {
-          var productList = innerResponse.getReturnValue();
-          component.set("v.productList", productList);
+        // var innerAction = component.get("c.getProducts");
+        // innerAction.setCallback(this, function(innerResponse) {
+        //   var productList = innerResponse.getReturnValue();
+        //   component.set("v.productList", productList);
+        //   helper.helperOnInit(component, event, helper);
+        // });
+        // $A.enqueueAction(innerAction);
 
-          let Id = "";
-
-          let Ids = helper.helperFindCategoriesIdInCategory(
-            component,
-            event,
-            helper,
-            Id
-          );
-
-          let count = helper.helperCountProdInCategory(
-            component,
-            event,
-            helper,
-            Ids
-          );
-
-          helper.helperAddFirstCategory(component, event, helper, count);
-
-          helper.helperFindInnerCategories(component, event, helper, Id);
-        });
-
-        $A.enqueueAction(innerAction);
       } else {
         console.log("Failed with state: " + state);
       }
@@ -47,9 +28,7 @@
   },
   downTheTree: function(component, event, helper) {
     var Id, count;
-
     var Name = event.getSource().get("v.label");
-
     let tempArray = component
       .get("v.tempCategories")
       .filter(el => el.product.Name === Name);
@@ -70,7 +49,6 @@
       helper,
       Id
     );
-
     var appEvent = $A.get("e.c:selectedCategoryUpdatedEvent");
     appEvent.setParams({
       selectedCategoryIdList: selectedCategoryIdList

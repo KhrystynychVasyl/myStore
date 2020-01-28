@@ -80,8 +80,6 @@
 
   helperSaveToCookie: function(component, event, helper, name) {
     let toSave = component.get(`v.${name}`);
-    console.log(toSave.length);
-    console.log(JSON.stringify(toSave));
     let carlist = JSON.stringify(toSave);
     this.helperSetCookie(component, event, helper, [name, carlist, 30]);
   },

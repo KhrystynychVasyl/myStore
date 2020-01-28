@@ -5,8 +5,7 @@
       alert("empty");
     } else {
       //console.log(someData);
-      let cartList = JSON.parse(someData);
-      cartList.forEach(el => console.log(el.Id));
+      let cartList = JSON.parse(someData)
       component.set("v.cartList", cartList);
       helper.helperTotalPriceCount(component, event, helper);
     }
