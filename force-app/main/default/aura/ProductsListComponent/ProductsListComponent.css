@@ -1,2 +1,11 @@
-.THIS {
+.THIS .flex-row {
+  display: flex;
+  justify-content: center;
+
+}
+.THIS .pagination-button {
+  margin: 5px;
+  padding: 0px 5px;
+  border: 1px solid navy;
+  border-radius: 3px;
 }

@@ -6,7 +6,6 @@
         <div class="border-class">
           <c:ProductListItem productItem="{!prod}" />
         </div>
-          
       </div>
     </aura:iteration>
   </div>

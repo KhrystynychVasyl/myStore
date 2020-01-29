@@ -16,7 +16,7 @@
   <aura:handler event="c:cartListChange" action="{!c.handleCartListChange}" />
   <aura:attribute name="OrderProduct" type="myOrder_product__c[]" />
   <aura:attribute name="cartList" type="Object[]" />
-  <aura:attribute
+  <aura:attribute 
     name="newCustomer"
     type="myCustomer__c"
     default="{ 'sobjectType': 'myCustomer__c'}"
@@ -25,23 +25,16 @@
     name="newOrder"
     type="myorder__c"
     default="{ 'sobjectType': 'myorder__c',
-    'Name': 'qew',
-    'Additional_Information__c': 'qew'}"
+    'Name': '',
+    'Additional_Information__c': ''}"
   />
   <aura:attribute name="truthy" type="Boolean" default="true" />
   <aura:attribute name="totalPrice" type="Integer" default="0" />
-
   <aura:attribute name="isOpen" type="boolean" default="false" />
 
-  <!-- <aura:handler name="init" action="{!c.doInit}" value="{!this}" /> -->
-
   <c:myHeader header="Cart Window" />
-  <c:CustomerModalWindowComponent isOpen="{!v.isOpen}" />
-  <!-- <lightning:button
-  label="TESSSSSSSSSSTTTTTTTTTTTTT"
-  variant="success"
-  onclick="{!c.test}"
-/> -->
+  <c:CustomerModalWindowComponent isOpenInner="{!v.isOpen}" />
+
   <div class="cart-block">
     <aura:if isTrue="{!v.truthy}">
       <div class="inner-div">

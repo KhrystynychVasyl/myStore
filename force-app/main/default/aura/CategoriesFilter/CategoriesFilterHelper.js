@@ -104,16 +104,17 @@
   },
   helperOnInit: function(component, event, helper) {
     let Id = "";
+    let count = ''
     let Ids = this.helperFindCategoriesIdInCategory(
       component,
       event,
       helper,
       Id
     );
-    let count = this.helperCountProdInCategory(component, event, helper, [
-      Ids,
-      Id
-    ]);
+    // let count = this.helperCountProdInCategory(component, event, helper, [
+    //   Ids,
+    //   Id
+    // ]);
     this.helperAddFirstCategory(component, event, helper, count);
     this.helperFindInnerCategories(component, event, helper, Id);
   }

@@ -3,12 +3,38 @@
   implements="forceCommunity:availableForAllPageTypes"
   access="global"
 >
-<aura:handler
-event="c:selectedCategoryUpdatedEvent"
-action="{!c.handleApplicationEvent}"
-/>
+  <aura:handler
+    event="c:selectedCategoryUpdatedEvent"
+    action="{!c.handleApplicationEvent}"
+  />
+  <aura:attribute name="selectedCategoryIdList" type="Id[]" />
+  <aura:attribute name="page" type="Integer" default="1" />
+  <aura:attribute name="pageLimit" type="Integer" default="6" />
+  <aura:attribute
+    name="arrButton"
+    type="Integer[]"
+    default="[1,2,3,4,5,6,7,8]"
+  />
+
   <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
   <aura:attribute name="products" type="myProduct__c[]" />
   <c:myHeader header="Products List" />
+  <aura:if isTrue="{!v.selectedCategoryIdList[0]}">
+    <div>
+      <div class="flex-row">
+        <aura:iteration items="{!v.arrButton}" var="button">
+          <span class="pagination-button">
+            <lightning:button
+              aura:id="page"
+              variant="info"
+              label="{!button}"
+              title="{!button}"
+              onclick="{! c.handleClick }"
+            />
+          </span>
+        </aura:iteration>
+      </div>
+    </div>
+  </aura:if>
   <c:ProductsList productList="{!v.products}" />
 </aura:component>
