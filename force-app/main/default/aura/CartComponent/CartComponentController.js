@@ -2,7 +2,7 @@
   doInit: function(component, event, helper) {
     let someData = helper.helperGetCookie(component, event, helper, "cartList");
     if (someData === "") {
-      alert("empty");
+      console.log("Empty cookie product list");
     } else {
       //console.log(someData);
       let cartList = JSON.parse(someData)

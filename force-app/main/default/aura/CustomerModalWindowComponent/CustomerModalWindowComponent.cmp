@@ -2,7 +2,7 @@
   implements="forceCommunity:availableForAllPageTypes"
   access="global"
 >
-  <aura:attribute name="isOpenInner" type="boolean" default="false" />
+  <aura:attribute name="isOpen" type="boolean" default="false" />
   <aura:attribute
     name="newCustomer"
     type="myCustomer__c"
@@ -15,7 +15,7 @@
       name="anonymousCustomer"
       type="myCustomer__c"
       default="{ 'sobjectType': 'myCustomer__c', 'Id': 'a003X0000132mlIQAQ',
-      'Contact_Name__c': '', 'Phone__c':'','email__c':''}"
+      'Contact_Name__c': 'asdads', 'Phone__c':'123-456-7890','email__c':'lightning@force.com'}"
     />
 
   <aura:registerEvent
@@ -26,7 +26,7 @@
   <aura:registerEvent name="logInFromModalEvent" type="c:logInFromModalEvent" />
   <aura:handler event="c:logInEvent" action="{!c.handleLogInEvent}" />
   <div>
-    <aura:if isTrue="{!v.isOpenInner}">
+    <aura:if isTrue="{!v.isOpen}">
       <section
         role="dialog"
         tabindex="-1"

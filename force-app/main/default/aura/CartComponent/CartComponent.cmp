@@ -25,15 +25,15 @@
     name="newOrder"
     type="myorder__c"
     default="{ 'sobjectType': 'myorder__c',
-    'Name': '',
-    'Additional_Information__c': ''}"
+    'Name': 'asdsada',
+    'Additional_Information__c': 'asdasd'}"
   />
   <aura:attribute name="truthy" type="Boolean" default="true" />
   <aura:attribute name="totalPrice" type="Integer" default="0" />
   <aura:attribute name="isOpen" type="boolean" default="false" />
 
   <c:myHeader header="Cart Window" />
-  <c:CustomerModalWindowComponent isOpenInner="{!v.isOpen}" />
+  <c:CustomerModalWindowComponent isOpen="{!v.isOpen}" />
 
   <div class="cart-block">
     <aura:if isTrue="{!v.truthy}">
