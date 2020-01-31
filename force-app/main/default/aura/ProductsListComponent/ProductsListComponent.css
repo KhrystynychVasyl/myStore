@@ -9,3 +9,8 @@
   border: 1px solid navy;
   border-radius: 3px;
 }
+.THIS.flex-row-space-between{
+  display: flex;
+  justify-content: space-between;
+
+}

@@ -1,8 +1,7 @@
 public with sharing class ProductController {
   @AuraEnabled
   public static List<myProduct__c> getProducts() {
-    // Perform isAccessible() checking first, then
-    return [
+    List<myProduct__c> result = [
       SELECT
         Id,
         Name,
@@ -10,20 +9,16 @@ public with sharing class ProductController {
         price__c,
         stock__c,
         Description__c,
-        imgUrl__c
+        Image__c,
+        ImageURL__c
       FROM myProduct__c
       LIMIT 12
     ];
+    return result;
   }
 
-  // public static myorder__c addNewOrder(String myObject) {
-  // List<CustomeObject> newList = (List<CustomeObject>) JSON.deserialize(
-  //   myObject,
-  //   List<CustomeObject>.class
-  // );
-
   @AuraEnabled
-  public static List<myProduct__c> getProductsByIds(String SentObject) {
+  public static String getProductsByIds(String SentObject) {
     SentObject custObject = (SentObject) JSON.deserialize(
       SentObject,
       SentObject.class
@@ -41,24 +36,52 @@ public with sharing class ProductController {
     //   this.pageLimit +' OFFSET ' + this.pageLimit * (page - 1)
     // );
 
-    return [
+    list<myProduct__c> count = [
+      SELECT Id
+      FROM myProduct__c
+      WHERE category__r.id = :selectedCategoryIdList
+    ];
+
+    List<myProduct__c> result = [
       SELECT
-        ID,
+        Id,
         Name,
         category__r.Name,
         price__c,
         stock__c,
         Description__c,
-        imgUrl__c
+        Image__c,
+        ImageURL__c
       FROM myProduct__c
       WHERE category__r.id = :selectedCategoryIdList
       LIMIT :pageLimit
       OFFSET :limitSet
     ];
+
+    // for (myProduct__c prod : result) {
+    //   prod.ImageURL__c = prod.Image__c.subStringBetween(
+    //       prod.Image__c.contains('src') ? 'src="' : 'href="',
+    //       '"'
+    //     )
+    //     .replaceAll('&amp;', '&');
+    // }
+
+    SendResult sendResult = new SendResult();
+    sendResult.pagesQuantity = count.size();
+    sendResult.productList = result;
+
+    String sendResultString = JSON.serialize(sendResult);
+
+    return sendResultString;
   }
   public class SentObject {
     Integer page;
     Integer pageLimit;
     List<String> selectedCategoryIdList;
+  }
+
+  public class SendResult {
+    Integer pagesQuantity;
+    List<myProduct__c> productList;
   }
 }

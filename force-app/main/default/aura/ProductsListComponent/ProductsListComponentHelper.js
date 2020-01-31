@@ -20,12 +20,22 @@
     action.setCallback(this, function(response) {
       var state = response.getState();
       if (state === "SUCCESS") {
-        component.set("v.products", response.getReturnValue());
+        let responseBody = JSON.parse(response.getReturnValue());
+        let count = responseBody.pagesQuantity;
+        let arrButton = component.get("v.arrButton");
+        arrButton = [];
+
+        for (let i = 0; i < count / pageLimit; i++) {
+          arrButton.push(i + 1);
+        }
+        component.set("v.products", responseBody.productList);
+        component.set("v.arrButton", arrButton);
       } else {
         console.log("Failed with state: " + state);
       }
     });
     // Send action off to be executed
     $A.enqueueAction(action);
-  }
+  },
+  getPagesQuantity: function(component, event, helper) {}
 });

@@ -3,9 +3,9 @@
   <aura:attribute name="productItem" type="myProduct__c" />
   <aura:attribute name="quantity" type="Integer" />
   <div class="cart-item-box">
-    <!-- <div class="product-card-image">
-      <img src="{!v.productItem.imgUrl__c}" />
-    </div> -->
+    <div class="product-card-image">
+      <img src="{!v.productItem.ImageURL__c}" />
+    </div>
     <div class="cart">
       <p>{!v.productItem.Name}</p>
       <br></br>

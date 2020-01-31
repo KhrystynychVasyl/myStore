@@ -1,40 +1,43 @@
 public with sharing class LogInController {
   @AuraEnabled
   public static myCustomer__c shopLogIn(String newCustomer) {
-    List<myCustomer__c> newCustomerList = (List<myCustomer__c>) JSON.deserialize(
+    myCustomer__c newCustomerList = (myCustomer__c) JSON.deserialize(
       newCustomer,
-      List<myCustomer__c>.class
+      myCustomer__c.class
     );
 
     myCustomer__c customerLogin = [
       SELECT Id, Name, Password__c
       FROM myCustomer__c
       WHERE
-        Name = :newCustomerList.get(0).name
-        AND Password__c = :newCustomerList.get(0).Password__c
+        Name = :newCustomerList.Name
     ];
-    return customerLogin;
+
+    if (customerLogin.Password__c == newCustomerList.Password__c) {
+      return customerLogin;
+    } else {
+      throw new AuraHandledException('Invalid information');
+    }
   }
   @AuraEnabled
   public static myCustomer__c shopSingUp(String newCustomer) {
-    List<myCustomer__c> newCustomerSingUp = (List<myCustomer__c>) JSON.deserialize(
+    myCustomer__c newCustomerSingUp = (myCustomer__c) JSON.deserialize(
       newCustomer,
-      List<myCustomer__c>.class
+      myCustomer__c.class
     );
 
     List<myCustomer__c> customerCheck = [
-      SELECT Id, Name
+      SELECT Id, Password__c
       FROM myCustomer__c
       WHERE
-        Name = :newCustomerSingUp.get(0).name
-        AND Password__c = :newCustomerSingUp.get(0).Password__c
+        Name = :newCustomerSingUp.Name
     ];
 
-    if (customerCheck.size() > 0) {
-      throw new AuraHandledException('NSFW name detected.');
+    if (customerCheck.size() > 0 && customerCheck.get(0).Password__c == newCustomerSingUp.Password__c) {
+      throw new AuraHandledException('Name already exist');
     } else {
-      insert newCustomerSingUp.get(0);
-      return newCustomerSingUp.get(0);
+      insert newCustomerSingUp;
+      return newCustomerSingUp;
     }
   }
 }

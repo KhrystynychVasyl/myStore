@@ -1,1 +1,1 @@
-insert new myorder__c(Name = 'asd',customer__c = 'a003X0000132mlIQAQ',  Additional_Information__c = 'asdads');
+insert new myorder__c(Name = 'test',customer__c = 'a003X0000132mlIQAQ',Additional_Information__c = 'test text');      

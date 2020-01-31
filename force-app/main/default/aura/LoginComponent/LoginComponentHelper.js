@@ -37,7 +37,7 @@
     };
     
     action.setParams({
-      newCustomer: JSON.stringify([sendUser])
+      newCustomer: JSON.stringify(sendUser)
     });
     action.setCallback(this, function(response) {
       var state = response.getState();
@@ -62,7 +62,7 @@
         switch (label) {
           case "Log In":
             {
-              alert("Invalid information");
+              alert(state[0].message);
             }
             break;
           case "Sing Up":

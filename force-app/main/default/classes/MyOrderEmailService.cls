@@ -19,30 +19,69 @@ public with sharing class MyOrderEmailService extends Handler implements Schedul
       List<String> letterBody
     ) {
       List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
-      //List<String> recievers = this.getUserIdsByProfile(this.profileName);
 
-      List<String> recievers  = new List<String>();
+      //       List<User> users = [
+      //   SELECT Id, Email
+      //   FROM User
+      //   WHERE
+      //     ProfileId IN (
+      //       SELECT Id
+      //       FROM Profile
+      //       WHERE Name = 'Shop Admin'
+      //     )
+      // ];
+      // List<String> result = new List<String>();
+      // for (User user : users) {
+      //   result.add(user.Email);
+      // }
+
+      List<String> recieversSys = this.getUserIdsByProfile(this.profileName);
+
+      // System.debug('profile in method : ' + this.profileName);
+      // System.debug(this.getUserIdsByProfile(this.profileName));
+
+      // System.debug(
+      //   'You have made ' +
+      //   Limits.getEmailInvocations() +
+      //   ' email calls out of ' +
+      //   Limits.getLimitEmailInvocations() +
+      //   ' allowed'
+      // );
+      List<String> recievers = new List<String>();
       recievers.add('vasyl.fear.k2@gmail.com');
-      recievers.add('khrystynych.vasyl@gmail.com');
+      System.debug(recievers);
 
       for (Integer i = 0; i < orders.size(); i++) {
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
         mail.setToAddresses(recievers);
         mail.setSubject(letterSubject[i]);
-        mail.setPlainTextBody(letterBody[i]);
+        mail.setPlainTextBody(letterBody[i] + '    test      '  +  recievers);
         mails.add(mail);
       }
-      Messaging.sendEmail(mails);
+
+      insert new Letter_Body__c(Name = 'test', Recievers_Email__c = 'test + ' + recieversSys);
+      //Messaging.sendEmail(mails);
     }
 
     public List<String> getUserIdsByProfile(String profileName) {
+      //System.debug('profile in inner method : '+ profileName);
       List<User> users = [
-        SELECT Id
+        SELECT Id, Email
         FROM User
-        WHERE ProfileId IN (SELECT Id FROM Profile WHERE Name = :profileName)
+        WHERE
+          ProfileId IN (
+            SELECT Id
+            FROM Profile
+            WHERE Name = 'Shop Admin'
+          )
       ];
-      return new List<String>(new Map<String, User>(users).keySet());
+      List<String> result = new List<String>();
+      for (User user : users) {
+        result.add(user.Email);
+      }
+      // return new List<String>(new Map<String, User>(users).keySet());
+      return result;
     }
   }
 
@@ -88,7 +127,7 @@ public with sharing class MyOrderEmailService extends Handler implements Schedul
 
   private class OrderEmailTriggerHandler extends OrderEmailService {
     public OrderEmailTriggerHandler() {
-      super('System Administrator');
+      super('Shop Admin');
     }
     public void sendEmailOnNewOrder(List<myorder__c> newOrders) {
       List<String> newOrderLetterSubjectList = new List<String>();
