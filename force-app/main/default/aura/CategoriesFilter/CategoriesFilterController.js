@@ -18,7 +18,6 @@
         //   helper.helperOnInit(component, event, helper);
         // });
         // $A.enqueueAction(innerAction);
-
       } else {
         console.log("Failed with state: " + state);
       }
@@ -51,6 +50,7 @@
     );
     var appEvent = $A.get("e.c:selectedCategoryUpdatedEvent");
     appEvent.setParams({
+      selectedCategoryId: Id,
       selectedCategoryIdList: selectedCategoryIdList
     });
     appEvent.fire();
@@ -78,6 +78,7 @@
 
     var appEvent = $A.get("e.c:selectedCategoryUpdatedEvent");
     appEvent.setParams({
+      selectedCategoryId: Id,
       selectedCategoryIdList: selectedCategoryIdList
     });
     appEvent.fire();

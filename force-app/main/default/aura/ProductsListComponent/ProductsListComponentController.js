@@ -1,32 +1,31 @@
 ({
   doInit: function(component, event, helper) {
-    // Create the action
-    var action = component.get("c.getProducts");
-    // Add callback behavior for when response is received
-    action.setCallback(this, function(response) {
-      var state = response.getState();
-      if (state === "SUCCESS") {
-        component.set("v.products", response.getReturnValue());
-      } else {
-        console.log("Failed with state: " + state);
-      }
-    });
-    // Send action off to be executed
-    $A.enqueueAction(action);
+    helper.getAllProducts(component, event);
   },
-  handleClick: function(component, event, helper) {
-    //let currentPage = event.getsource().getlocalid();
+  handlePageClick: function(component, event, helper) {
     let page = event.getSource().get("v.label");
-
-    console.log('testttttttt   ' + event.getSource().getLocalId());
-    // page = parseInt(page, 10);
-    // console.log(typeof page);
-    component.set("v.page", parseInt(page, 10));
-    helper.refreshPage(component, event, helper, page);
+    component.set("v.page", page);
+    helper.refreshPage(component, event, helper);
+  },
+  handlePageLimitClick: function(component, event, helper) {
+    let page = component.get("v.page");
+    let pageLimit = event.getSource().get("v.label");
+    let count = component.get("v.count");
+    component.set("v.pageLimit", pageLimit);
+    if (count / pageLimit < page) {
+      component.set("v.page", Math.round(count / pageLimit));
+    }
+    helper.refreshPage(component, event, helper);
   },
   handleApplicationEvent: function(component, event, helper) {
     var selectedCategoryIdList = event.getParam("selectedCategoryIdList");
+    var selectedCategoryId = event.getParam("selectedCategoryId");
     component.set("v.selectedCategoryIdList", selectedCategoryIdList);
-    helper.refreshPage(component, event, helper);
+    if (selectedCategoryId === "") {
+      helper.getAllProducts(component, event);
+    } else {
+      helper.getCountProductsByIds(component, event);
+    }
+    component.set("v.selectedCategoryId", selectedCategoryId);
   }
 });

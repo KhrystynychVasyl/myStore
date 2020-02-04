@@ -1,41 +1,80 @@
 ({
-  refreshPage: function(component, event, helper, page) {
-    //let page = component.get("v.page");
+  refreshPage: function(component, event) {
+    let page = component.get("v.page");
     let pageLimit = component.get("v.pageLimit");
-    if (!page) {
-      page = 1;
-    }
-
     var selectedCategoryIdList = component.get("v.selectedCategoryIdList");
-    let SentObject = {
+    var action = component.get("c.getProductsByIds");
+    action.setParams({
       selectedCategoryIdList: selectedCategoryIdList,
       page: page,
       pageLimit: pageLimit
-    };
-
-    console.log(JSON.stringify(SentObject));
-
-    var action = component.get("c.getProductsByIds");
-    action.setParams({ SentObject: JSON.stringify(SentObject) });
+    });
     action.setCallback(this, function(response) {
       var state = response.getState();
       if (state === "SUCCESS") {
-        let responseBody = JSON.parse(response.getReturnValue());
-        let count = responseBody.pagesQuantity;
+        let productList = response.getReturnValue();
+        let count = component.get("v.count");
         let arrButton = component.get("v.arrButton");
         arrButton = [];
-
         for (let i = 0; i < count / pageLimit; i++) {
           arrButton.push(i + 1);
         }
-        component.set("v.products", responseBody.productList);
+
+        productList = productList.map(element => {
+          if (element.Image__c) {
+            element.ImageURL__c =
+              element.ImageURL__c +
+              element.Image__c.split("OnlineShop")[1]
+                .split('" alt')[0]
+                .split("amp;")
+                .join("");
+          } else {
+            element.ImageURL__c = "";
+          }
+          return element;
+        });
+
+        component.set("v.products", productList);
         component.set("v.arrButton", arrButton);
       } else {
         console.log("Failed with state: " + state);
       }
     });
-    // Send action off to be executed
     $A.enqueueAction(action);
   },
-  getPagesQuantity: function(component, event, helper) {}
+  getAllProducts: function(component, event) {
+    let page = 1;
+    let pageLimit = 12;
+
+    var action = component.get("c.getProducts");
+    action.setParams({
+      page: page,
+      pageLimit: pageLimit
+    });
+    action.setCallback(this, function(response) {
+      var state = response.getState();
+      if (state === "SUCCESS") {
+        component.set("v.products", response.getReturnValue());
+      } else {
+        console.log("Failed with state: " + state);
+      }
+    });
+    $A.enqueueAction(action);
+  },
+  getCountProductsByIds: function(component, event) {
+    var selectedCategoryIdList = component.get("v.selectedCategoryIdList");
+    var action = component.get("c.getCountProductsByIds");
+    action.setParams({
+      selectedCategoryIdList: selectedCategoryIdList
+    });
+    action.setCallback(this, function(response) {
+      var state = response.getState();
+      if (state === "SUCCESS") {
+        let count = response.getReturnValue();
+        component.set("v.count", count);
+        this.refreshPage(component, event);
+      }
+    });
+    $A.enqueueAction(action);
+  }
 });

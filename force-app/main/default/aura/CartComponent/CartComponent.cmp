@@ -3,17 +3,18 @@
   implements="forceCommunity:availableForAllPageTypes"
   access="global"
 >
-  <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
-  <aura:handler
-    event="c:addItemToCartEvent"
-    action="{!c.handleAddItemToCartEvent}"
-  />
-  <aura:handler
-    event="c:customerInfoUpdateEvent"
-    action="{!c.handleCustomerInfoUpdateEvent}"
-  />
-  <aura:handler event="c:logInEvent" action="{!c.handleLogInEvent}" />
-  <aura:handler event="c:cartListChange" action="{!c.handleCartListChange}" />
+<aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+<aura:handler
+event="c:addItemToCartEvent"
+action="{!c.handleAddItemToCartEvent}"
+/>
+<aura:handler
+event="c:customerInfoUpdateEvent"
+action="{!c.handleCustomerInfoUpdateEvent}"
+/>
+<aura:handler event="c:logInEvent" action="{!c.handleLogInEvent}" />
+<aura:handler event="c:cartListChange" action="{!c.handleCartListChange}" />
+                      
   <aura:attribute name="OrderProduct" type="myOrder_product__c[]" />
   <aura:attribute name="cartList" type="Object[]" />
   <aura:attribute 

@@ -1,1 +1,1 @@
-insert new myorder__c(Name = 'test',customer__c = 'a003X0000132mlIQAQ',Additional_Information__c = 'test text');      
+System.debug(ProductController.getImageURL([select id, Image__c, ImageURL__c from myProduct__c where Name = 'Large drone']));

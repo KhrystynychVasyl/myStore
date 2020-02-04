@@ -1,5 +1,5 @@
 .THIS.cart-item-box {
-  height: 250px;
+  height: 450px;
   margin: 3px 0px;
   padding: 3px 0px;
   display: flex;
@@ -18,4 +18,18 @@
 .THIS .actionButton div {
   margin: 3px 0px;
   padding: 3px 0px;
+}
+
+.THIS .product-card-image {
+  margin: auto;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px 1px rgb(116, 13, 13);
+  height: 200px;
+  max-width: 94%;
+}
+
+.THIS .product-card-image img {
+  border-radius: 5px;
+  max-height: 190px;
+  max-width: 98%;
 }

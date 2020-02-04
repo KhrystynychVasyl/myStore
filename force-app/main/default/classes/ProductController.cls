@@ -1,6 +1,9 @@
 public with sharing class ProductController {
   @AuraEnabled
-  public static List<myProduct__c> getProducts() {
+  public static List<myProduct__c> getProducts(
+    Integer page,
+    Integer pageLimit
+  ) {
     List<myProduct__c> result = [
       SELECT
         Id,
@@ -12,36 +15,26 @@ public with sharing class ProductController {
         Image__c,
         ImageURL__c
       FROM myProduct__c
-      LIMIT 12
+      LIMIT :pageLimit
+      OFFSET :(page - 1) * pageLimit
     ];
     return result;
   }
-
   @AuraEnabled
-  public static String getProductsByIds(String SentObject) {
-    SentObject custObject = (SentObject) JSON.deserialize(
-      SentObject,
-      SentObject.class
-    );
-
-    Integer page = custObject.page;
-    Integer pageLimit = custObject.pageLimit;
-    Integer limitSet = (page - 1) * pageLimit;
-    String[] selectedCategoryIdList = custObject.selectedCategoryIdList;
-    // Perform isAccessible() checking first, then
-
-    // return Database.query(
-    //   'SELECT ID,Name,category__r.Name,price__c,stock__c,Description__c,imgUrl__c FROM' +
-    //   'myProduct__c WHERE category__r.id = :selectedCategoryIdList Limit ' +
-    //   this.pageLimit +' OFFSET ' + this.pageLimit * (page - 1)
-    // );
-
-    list<myProduct__c> count = [
-      SELECT Id
+  public static Integer getCountProductsByIds(List<Id> selectedCategoryIdList) {
+    return [
+      SELECT COUNT()
       FROM myProduct__c
       WHERE category__r.id = :selectedCategoryIdList
     ];
+  }
 
+  @AuraEnabled
+  public static List<myProduct__c> getProductsByIds(
+    Integer page,
+    Integer pageLimit,
+    List<Id> selectedCategoryIdList
+  ) {
     List<myProduct__c> result = [
       SELECT
         Id,
@@ -55,33 +48,30 @@ public with sharing class ProductController {
       FROM myProduct__c
       WHERE category__r.id = :selectedCategoryIdList
       LIMIT :pageLimit
-      OFFSET :limitSet
+      OFFSET :(page - 1) * pageLimit
     ];
 
-    // for (myProduct__c prod : result) {
-    //   prod.ImageURL__c = prod.Image__c.subStringBetween(
-    //       prod.Image__c.contains('src') ? 'src="' : 'href="',
-    //       '"'
-    //     )
-    //     .replaceAll('&amp;', '&');
-    // }
+    for (myProduct__c product : result) {
+      product.ImageURL__c = getImageURL(product);
+      //product.ImageURL__c = 'https://khrystynychvasyl-dev-ed--c.documentforce.com/servlet/rtaImage?eid=a023X00001p6XZH&feoid=00N3X00000J9HW6&refid=0EM3X000002Y4gC';
+      //                       https://khrystynychvasyl-dev-ed--c.documentforce.com/servlet/rtaImage?eid=a023X00001p6XZC;feoid=00N3X00000J9HW6;refid=0EM3X000002Y4fd
+    }
 
-    SendResult sendResult = new SendResult();
-    sendResult.pagesQuantity = count.size();
-    sendResult.productList = result;
-
-    String sendResultString = JSON.serialize(sendResult);
-
-    return sendResultString;
-  }
-  public class SentObject {
-    Integer page;
-    Integer pageLimit;
-    List<String> selectedCategoryIdList;
+    return result;
   }
 
-  public class SendResult {
-    Integer pagesQuantity;
-    List<myProduct__c> productList;
+  public static String getImageURL(myProduct__c product) {
+    String source = (String) JSON.deserializeUntyped(
+      JSON.serialize(product.Image__c)
+    );
+
+    // String test2 = source.substringBetween('src="', '"').unescapeHtml4();
+    // String test = source.substringBetween('img');
+        String base = 'https://khrystynychvasyl-dev-ed--c.documentforce.com';
+    //     // return (base + product.Image__c.substringBetween('OnlineShop', '" alt')).unescapeHtml4();
+    //     // return base + test + 'trsdfsf  ' + test2;
+    //     return test2;
+
+    return base;
   }
 }

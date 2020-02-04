@@ -1,7 +1,6 @@
 .THIS .flex-row {
   display: flex;
   justify-content: center;
-
 }
 .THIS .pagination-button {
   margin: 5px;
@@ -9,8 +8,10 @@
   border: 1px solid navy;
   border-radius: 3px;
 }
-.THIS.flex-row-space-between{
+.THIS.flex-row-space-between {
   display: flex;
   justify-content: space-between;
-
+}
+.THIS .active {
+  background-color: rgb(97, 255, 77);
 }
