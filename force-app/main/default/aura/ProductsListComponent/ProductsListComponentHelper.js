@@ -12,30 +12,32 @@
     action.setCallback(this, function(response) {
       var state = response.getState();
       if (state === "SUCCESS") {
-        let productList = response.getReturnValue();
         let count = component.get("v.count");
         let arrButton = component.get("v.arrButton");
         arrButton = [];
         for (let i = 0; i < count / pageLimit; i++) {
           arrButton.push(i + 1);
         }
-
-        productList = productList.map(element => {
-          if (element.Image__c) {
-            element.ImageURL__c =
-              element.ImageURL__c +
-              element.Image__c.split("OnlineShop")[1]
-                .split('" alt')[0]
-                .split("amp;")
-                .join("");
-          } else {
-            element.ImageURL__c = "";
-          }
-          return element;
-        });
-
-        component.set("v.products", productList);
         component.set("v.arrButton", arrButton);
+
+        this.refreshProductList(component, event, response);
+        // let productList = response.getReturnValue();
+
+        // productList = productList.map(element => {
+        //   if (element.Image__c) {
+        //     element.ImageURL__c =
+        //       element.ImageURL__c +
+        //       element.Image__c.split("OnlineShop")[1]
+        //         .split('" alt')[0]
+        //         .split("amp;")
+        //         .join("");
+        //   } else {
+        //     element.ImageURL__c = "";
+        //   }
+        //   return element;
+        // });
+
+        // component.set("v.products", productList);
       } else {
         console.log("Failed with state: " + state);
       }
@@ -54,7 +56,7 @@
     action.setCallback(this, function(response) {
       var state = response.getState();
       if (state === "SUCCESS") {
-        component.set("v.products", response.getReturnValue());
+        this.refreshProductList(component, event, response);
       } else {
         console.log("Failed with state: " + state);
       }
@@ -76,5 +78,22 @@
       }
     });
     $A.enqueueAction(action);
+  },
+  refreshProductList: function(component, event, response) {
+    let productList = response.getReturnValue();
+    productList = productList.map(element => {
+      if (element.Image__c) {
+        element.ImageURL__c =
+          element.ImageURL__c +
+          element.Image__c.split("OnlineShop")[1]
+            .split('" alt')[0]
+            .split("amp;")
+            .join("");
+      } else {
+        element.ImageURL__c = "";
+      }
+      return element;
+    });
+    component.set("v.products", productList);
   }
 });

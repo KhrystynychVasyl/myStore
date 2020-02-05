@@ -18,6 +18,10 @@ public with sharing class ProductController {
       LIMIT :pageLimit
       OFFSET :(page - 1) * pageLimit
     ];
+
+        for (myProduct__c product : result) {
+      product.ImageURL__c = getImageURL(product);
+    }
     return result;
   }
   @AuraEnabled
